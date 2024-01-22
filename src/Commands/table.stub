@@ -1,0 +1,22 @@
+<?php
+
+namespace [namespace];
+
+use Conceptlz\ThunderboltLivewireTables\DataTableComponent;
+use Conceptlz\ThunderboltLivewireTables\Views\Column;
+use [model_import];
+
+class [class] extends DataTableComponent
+{
+    protected $model = [model]::class;
+
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id');
+    }
+
+    public function columns(): array
+    {
+        return [columns];
+    }
+}
