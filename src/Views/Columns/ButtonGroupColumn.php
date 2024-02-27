@@ -14,7 +14,7 @@ class ButtonGroupColumn extends Column
 
     protected array $buttons = [];
 
-    protected string $view = 'livewire-tables::includes.columns.button-group';
+    protected string $view = 'thunderbolt-livewire-tables::includes.columns.button-group';
 
     public function __construct(string $title, ?string $from = null)
     {

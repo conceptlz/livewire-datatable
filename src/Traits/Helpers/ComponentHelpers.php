@@ -66,7 +66,7 @@ trait ComponentHelpers
 
     public function getTheme(): string
     {
-        return $this->theme ?? config('livewire-tables.theme', 'tailwind');
+        return $this->theme ?? config('thunderbolt-livewire-tables.theme', 'tailwind');
     }
 
     public function isTailwind(): bool

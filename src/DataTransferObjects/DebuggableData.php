@@ -17,7 +17,7 @@ class DebuggableData
     {
         return [
             'query' => (clone $this->component->getBuilder())->toSql(),
-            'filters' => $this->component->getAppliedFilters(),
+            'filters' => $this->component->getAppliedFiltersWithValues(),
             'sorts' => $this->component->getSorts(),
             'search' => $this->component->getSearch(),
             'select-all' => $this->component->getSelectAllStatus(),

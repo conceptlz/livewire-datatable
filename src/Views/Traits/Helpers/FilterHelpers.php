@@ -83,7 +83,7 @@ trait FilterHelpers
         return $this->filterPillValues;
     }
 
-    public function getCustomFilterPillValue(string $value): ?string
+    public function getCustomFilterPillValue(mixed $value): ?string
     {
         return $this->getCustomFilterPillValues()[$value] ?? null;
     }
@@ -161,5 +161,10 @@ trait FilterHelpers
     public function render(): string|\Illuminate\Contracts\Foundation\Application|\Illuminate\View\View|\Illuminate\View\Factory
     {
         return view($this->getViewPath(), $this->getFilterDisplayData());
+    }
+
+    public function hasFilterWithOperand(): bool
+    {
+        return $this->with_operand;
     }
 }

@@ -11,9 +11,11 @@ class DateTimeFilter extends Filter
     use HasConfig,
         IsStringFilter;
 
-    protected string $view = 'livewire-tables::components.tools.filters.datetime';
+    public $type = 'datetime';    
 
-    protected string $configPath = 'livewire-tables.dateTimeFilter.defaultConfig';
+    protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.datetime';
+
+    protected string $configPath = 'thunderbolt-livewire-tables.dateTimeFilter.defaultConfig';
 
     public function validate(string $value): string|bool
     {

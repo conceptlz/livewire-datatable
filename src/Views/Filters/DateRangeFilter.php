@@ -10,18 +10,20 @@ class DateRangeFilter extends Filter
     use HasOptions,
         HasConfig;
 
-    protected string $view = 'livewire-tables::components.tools.filters.date-range';
+    public $type = 'date-range';
 
-    protected string $configPath = 'livewire-tables.dateRange.defaultConfig';
+    protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.date-range';
 
-    protected string $optionsPath = 'livewire-tables.dateRange.defaultOptions';
+    protected string $configPath = 'thunderbolt-livewire-tables.dateRange.defaultConfig';
+
+    protected string $optionsPath = 'thunderbolt-livewire-tables.dateRange.defaultOptions';
 
     public function getKeys(): array
     {
         return ['minDate' => '', 'maxDate' => ''];
     }
 
-    public function validate(array|string $values): array|bool
+    public function validate(mixed $values): array|bool
     {
         $this->getOptions();
         $this->getConfigs();
@@ -126,7 +128,7 @@ class DateRangeFilter extends Filter
         return '';
     }
 
-    public function isEmpty(array|string $value): bool
+    public function isEmpty(mixed $value): bool
     {
         $values = [];
         if (is_array($value)) {

@@ -57,7 +57,7 @@ trait ComponentUtilities
      * Runs configure() with Lifecycle Hooks on each Lifecycle
      */
     public function bootedComponentUtilities(): void
-    {
+    {addApiLog('bootedComponentUtilities','bootedComponentUtilities');
         // Fire Lifecycle Hooks for configuring
         $this->callHook('configuring');
         $this->callTraitHook('configuring');
@@ -92,6 +92,7 @@ trait ComponentUtilities
      */
     public function updated(string $name, string|array $value): void
     {
+        addApiLog('updated',$name);
         if ($name === 'search') {
             $this->resetComputedPage();
 
@@ -117,8 +118,32 @@ trait ComponentUtilities
 
             if ($filter && $filter->isEmpty($value)) {
                 $this->resetFilter($filterName);
+            }else{
+                //addApilog('filterName',$filterName);
+                //$this->setFilter($filterName,$value);
+                //addApilog('$this->filterComponents',$this->filterComponents);
+                $this->appliedFilters = $this->filterComponents;
             }
         }
+
+        if (Str::contains($name, 'filterConditions')) {
+            $this->resetComputedPage();
+
+            // Clear bulk actions on filter
+            $this->clearSelected();
+            $this->setSelectAllDisabled();
+
+            // Clear filters on empty value
+            $filterName = Str::after($name, 'filterConditions.');
+            $filter = $this->getFilterByKey($filterName);
+            $value = $this->filterComponents[$filterName];
+            if ($filter && $filter->isEmpty($value)) {
+                $this->resetFilter($filterName);
+            }else{
+                $this->appliedFilters = $this->filterComponents;
+            }
+        }
+
     }
 
     /**

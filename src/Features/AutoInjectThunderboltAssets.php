@@ -8,41 +8,41 @@ use Conceptlz\ThunderboltLivewireTables\Mechanisms\ThunderboltFrontendAssets;
 
 use function Livewire\on;
 
-class AutoInjectRappasoftAssets extends ComponentHook
+class AutoInjectThunderboltAssets extends ComponentHook
 {
     public static bool $hasRenderedAComponentThisRequest = false;
 
     public static bool $forceAssetInjection = false;
 
-    public static bool $shouldInjectRappasoftThirdPartyAssets = false;
+    public static bool $shouldInjectThunderboltThirdPartyAssets = false;
 
-    public static bool $shouldInjectRappasoftAssets = false;
+    public static bool $shouldInjectThunderboltAssets = false;
 
     public static function provide(): void
     {
-        static::$shouldInjectRappasoftAssets = config('thunderbolt-livewire-tables.inject_core_assets_enabled', true);
-        static::$shouldInjectRappasoftThirdPartyAssets = config('thunderbolt-livewire-tables.inject_third_party_assets_enabled', true);
+        static::$shouldInjectThunderboltAssets = config('thunderbolt-livewire-tables.inject_core_assets_enabled', true);
+        static::$shouldInjectThunderboltThirdPartyAssets = config('thunderbolt-livewire-tables.inject_third_party_assets_enabled', true);
 
         on('flush-state', function () {
             static::$hasRenderedAComponentThisRequest = false;
             static::$forceAssetInjection = false;
         });
 
-        if (static::$shouldInjectRappasoftAssets || static::$shouldInjectRappasoftThirdPartyAssets) {
+        if (static::$shouldInjectThunderboltAssets || static::$shouldInjectThunderboltThirdPartyAssets) {
 
             app('events')->listen(RequestHandled::class, function (RequestHandled $handled) {
 
-                if (! static::$shouldInjectRappasoftAssets && ! static::$shouldInjectRappasoftThirdPartyAssets) {
+                if (! static::$shouldInjectThunderboltAssets && ! static::$shouldInjectThunderboltThirdPartyAssets) {
                     return;
                 }
 
                 // If All Scripts Have Been Rendered - Return
                 if (
                     (
-                        ! static::$shouldInjectRappasoftAssets || app(ThunderboltFrontendAssets::class)->hasRenderedRappsoftTableScripts
+                        ! static::$shouldInjectThunderboltAssets || app(ThunderboltFrontendAssets::class)->hasRenderedThunderboltTableScripts
                     ) &&
                     (
-                        ! static::$shouldInjectRappasoftThirdPartyAssets || app(ThunderboltFrontendAssets::class)->hasRenderedRappsoftTableThirdPartyScripts
+                        ! static::$shouldInjectThunderboltThirdPartyAssets || app(ThunderboltFrontendAssets::class)->hasRenderedThunderboltTableThirdPartyScripts
                     )
                 ) {
                     return;
@@ -80,18 +80,18 @@ class AutoInjectRappasoftAssets extends ComponentHook
     {
 
         $html = str($html);
-        $rappaStyles = ((static::$shouldInjectRappasoftAssets === true) ? ThunderboltFrontendAssets::tableStyles() : '').' '.((static::$shouldInjectRappasoftThirdPartyAssets === true) ? ThunderboltFrontendAssets::tableThirdPartyStyles() : '');
-        $rappaScripts = ((static::$shouldInjectRappasoftAssets === true) ? ThunderboltFrontendAssets::tableScripts() : '').' '.((static::$shouldInjectRappasoftThirdPartyAssets === true) ? ThunderboltFrontendAssets::tableThirdPartyScripts() : '');
+        $rappaStyles = ((static::$shouldInjectThunderboltAssets === true) ? ThunderboltFrontendAssets::tableStyles() : '').' '.((static::$shouldInjectThunderboltThirdPartyAssets === true) ? ThunderboltFrontendAssets::tableThirdPartyStyles() : '');
+        $rappaScripts = ((static::$shouldInjectThunderboltAssets === true) ? ThunderboltFrontendAssets::tableScripts() : '').' '.((static::$shouldInjectThunderboltThirdPartyAssets === true) ? ThunderboltFrontendAssets::tableThirdPartyScripts() : '');
 
         if ($html->test('/<\s*head(?:\s|\s[^>])*>/i') && $html->test('/<\s*\/\s*body\s*>/i')) {
-            static::$shouldInjectRappasoftAssets = static::$shouldInjectRappasoftThirdPartyAssets = false;
+            static::$shouldInjectThunderboltAssets = static::$shouldInjectThunderboltThirdPartyAssets = false;
 
             return $html
                 ->replaceMatches('/(<\s*head(?:\s|\s[^>])*>)/i', '$1'.$rappaStyles)
                 ->replaceMatches('/(<\s*\/\s*head\s*>)/i', $rappaScripts.'$1')
                 ->toString();
         }
-        static::$shouldInjectRappasoftAssets = static::$shouldInjectRappasoftThirdPartyAssets = false;
+        static::$shouldInjectThunderboltAssets = static::$shouldInjectThunderboltThirdPartyAssets = false;
 
         return $html
             ->replaceMatches('/(<\s*html(?:\s[^>])*>)/i', '$1'.$rappaStyles)

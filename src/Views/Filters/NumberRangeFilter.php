@@ -8,33 +8,34 @@ use Conceptlz\ThunderboltLivewireTables\Views\Traits\Filters\{HasOptions};
 class NumberRangeFilter extends Filter
 {
     use HasOptions;
+    public $type = 'number';   
+     
+    protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.number-range';
 
-    protected string $view = 'livewire-tables::components.tools.filters.number-range';
-
-    protected string $configPath = 'livewire-tables.numberRange.defaultConfig';
+    protected string $configPath = 'thunderbolt-livewire-tables.numberRange.defaultConfig';
 
     public function options(array $options = []): NumberRangeFilter
     {
-        $this->options = [...config('livewire-tables.numberRange.defaultOptions'), ...$options];
+        $this->options = [...config('thunderbolt-livewire-tables.numberRange.defaultOptions'), ...$options];
 
         return $this;
     }
 
     public function getOptions(): array
     {
-        return ! empty($this->options) ? $this->options : $this->options = config('livewire-tables.numberRange.defaultOptions');
+        return ! empty($this->options) ? $this->options : $this->options = config('thunderbolt-livewire-tables.numberRange.defaultOptions');
     }
 
     public function config(array $config = []): NumberRangeFilter
     {
-        $this->config = [...config('livewire-tables.numberRange.defaultConfig'), ...$config];
+        $this->config = [...config('thunderbolt-livewire-tables.numberRange.defaultConfig'), ...$config];
 
         return $this;
     }
 
     public function getConfigs(): array
     {
-        return ! empty($this->config) ? $this->config : $this->config = config('livewire-tables.numberRange.defaultConfig');
+        return ! empty($this->config) ? $this->config : $this->config = config('thunderbolt-livewire-tables.numberRange.defaultConfig');
     }
 
     public function validate(array $values): array|bool
@@ -60,7 +61,7 @@ class NumberRangeFilter extends Filter
         return ['min' => $values['min'], 'max' => $values['max']];
     }
 
-    public function isEmpty(array|string $value): bool
+    public function isEmpty(mixed $value): bool
     {
         if (! is_array($value)) {
             return true;
@@ -84,6 +85,7 @@ class NumberRangeFilter extends Filter
 
     public function getFilterPillValue($values): ?string
     {
+        addApilog('getFilterPillValue',$values);
         if ($this->validate($values)) {
             return __('Min:').$values['min'].', '.__('Max:').$values['max'];
         }

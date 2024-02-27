@@ -16,7 +16,7 @@ class LinkColumn extends Column
         HasLocationCallback,
         HasTitleCallback;
 
-    protected string $view = 'livewire-tables::includes.columns.link';
+    protected string $view = 'thunderbolt-livewire-tables::includes.columns.link';
 
     public function __construct(string $title, ?string $from = null)
     {

@@ -16,6 +16,7 @@ trait WithEvents
 
     public function setFilterEvent($filter, $value): void
     {
+        addApilog('setFilterEvent',$filter);
         $this->setFilter($filter, $value);
     }
 

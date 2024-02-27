@@ -8,8 +8,10 @@ use Conceptlz\ThunderboltLivewireTables\Views\Traits\Filters\{IsStringFilter};
 class NumberFilter extends Filter
 {
     use IsStringFilter;
+    
+    public $type = 'number';
 
-    protected string $view = 'livewire-tables::components.tools.filters.number';
+    protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.number';
 
     public function validate(mixed $value): float|int|bool
     {

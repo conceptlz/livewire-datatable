@@ -19,7 +19,7 @@ class BooleanColumn extends Column
 
     protected bool $successValue = true;
 
-    protected string $view = 'livewire-tables::includes.columns.boolean';
+    protected string $view = 'thunderbolt-livewire-tables::includes.columns.boolean';
 
     public function getContents(Model $row): null|string|\Illuminate\Support\HtmlString|DataTableConfigurationException|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {

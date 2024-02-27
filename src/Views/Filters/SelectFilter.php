@@ -9,12 +9,13 @@ class SelectFilter extends Filter
 {
     use HasOptions,
         IsStringFilter;
+        
+    public $type = 'string';    
+    protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.select';
 
-    protected string $view = 'livewire-tables::components.tools.filters.select';
+    protected string $configPath = 'thunderbolt-livewire-tables.selectFilter.defaultConfig';
 
-    protected string $configPath = 'livewire-tables.selectFilter.defaultConfig';
-
-    protected string $optionsPath = 'livewire-tables.selectFilter.defaultOptions';
+    protected string $optionsPath = 'thunderbolt-livewire-tables.selectFilter.defaultOptions';
 
     public function getKeys(): array
     {
@@ -27,7 +28,7 @@ class SelectFilter extends Filter
             ->toArray();
     }
 
-    public function validate(string $value): array|string|bool
+    public function validate(mixed $value): array|string|bool
     {
         if (! in_array($value, $this->getKeys())) {
             return false;

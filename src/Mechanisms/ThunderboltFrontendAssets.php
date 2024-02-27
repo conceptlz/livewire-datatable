@@ -26,28 +26,28 @@ class ThunderboltFrontendAssets
     {
         // Set the JS route for the core tables JS
         app($this::class)->setThunderboltTableScriptRoute(function ($handle) {
-            $scriptPath = rtrim(config('thunderbolt-livewire-tables.script_base_path', '/thunderbolt/laravel-livewire-tables'), '/').'/core.min.js';
+            $scriptPath = rtrim(config('thunderbolt-livewire-tables.script_base_path', '/thunderbolt/laravel-livewire-tables'), '/').'/laravel-livewire-tables.min.js';
 
             return Route::get($scriptPath, $handle);
         });
 
         // Set the CSS route for the core tables CSS
         app($this::class)->setThunderboltTableStylesRoute(function ($handle) {
-            $stylesPath = rtrim(config('thunderbolt-livewire-tables.script_base_path', '/thunderbolt/laravel-livewire-tables'), '/').'/core.min.css';
+            $stylesPath = rtrim(config('thunderbolt-livewire-tables.script_base_path', '/thunderbolt/laravel-livewire-tables'), '/').'/laravel-livewire-tables.min.css';
 
             return Route::get($stylesPath, $handle);
         });
 
         // Set the JS route for the third party JS
         app($this::class)->setThunderboltTableThirdPartyScriptRoute(function ($handle) {
-            $scriptPath = rtrim(config('thunderbolt-livewire-tables.script_base_path', '/thunderbolt/laravel-livewire-tables'), '/').'/thirdparty.min.js';
+            $scriptPath = rtrim(config('thunderbolt-livewire-tables.script_base_path', '/thunderbolt/laravel-livewire-tables'), '/').'/laravel-livewire-tables-thirdparty.min.js';
 
             return Route::get($scriptPath, $handle);
         });
 
         // Set the CSS route for the third party CSS
         app($this::class)->setThunderboltTableThirdPartyStylesRoute(function ($handle) {
-            $stylesPath = rtrim(config('thunderbolt-livewire-tables.script_base_path', '/thunderbolt/laravel-livewire-tables'), '/').'/thirdparty.css';
+            $stylesPath = rtrim(config('thunderbolt-livewire-tables.script_base_path', '/thunderbolt/laravel-livewire-tables'), '/').'/laravel-livewire-tables-thirdparty.min.css';
 
             return Route::get($stylesPath, $handle);
         });

@@ -16,6 +16,10 @@ trait IsFilter
         HasVisibility,
         HasView;
 
+    public  $type;
+
+    public  $with_operand = true;
+    
     protected string $name;
 
     protected string $key;

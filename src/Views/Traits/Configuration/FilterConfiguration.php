@@ -76,4 +76,10 @@ trait FilterConfiguration
 
         return $this;
     }
+
+    public function setFilterWithOperand(bool $status): self
+    {
+        $this->with_operand = $status;
+        return $this;
+    }
 }

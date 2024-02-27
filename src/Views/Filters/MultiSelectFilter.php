@@ -9,14 +9,15 @@ class MultiSelectFilter extends Filter
 {
     use HasOptions,
         IsArrayFilter;
+    public $type = 'string';    
+    
+    protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.multi-select';
 
-    protected string $view = 'livewire-tables::components.tools.filters.multi-select';
+    protected string $configPath = 'thunderbolt-livewire-tables.multiSelectFilter.defaultConfig';
 
-    protected string $configPath = 'livewire-tables.multiSelectFilter.defaultConfig';
+    protected string $optionsPath = 'thunderbolt-livewire-tables.multiSelectFilter.defaultOptions';
 
-    protected string $optionsPath = 'livewire-tables.multiSelectFilter.defaultOptions';
-
-    public function validate(int|string|array $value): array|int|string|bool
+    public function validate(mixed $value): array|int|string|bool
     {
         if (is_array($value)) {
             foreach ($value as $index => $val) {

@@ -15,7 +15,7 @@ class ImageColumn extends Column
         ImageColumnHelpers,
         HasLocationCallback;
 
-    protected string $view = 'livewire-tables::includes.columns.image';
+    protected string $view = 'thunderbolt-livewire-tables::includes.columns.image';
 
     public function __construct(string $title, ?string $from = null)
     {

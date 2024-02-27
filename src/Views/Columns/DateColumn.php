@@ -22,7 +22,7 @@ class DateColumn extends Column
 
     public string $emptyValue = '';
 
-    protected string $view = 'livewire-tables::includes.columns.date';
+    protected string $view = 'thunderbolt-livewire-tables::includes.columns.date';
 
     public function getContents(Model $row): null|string|\BackedEnum|HtmlString|DataTableConfigurationException|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {

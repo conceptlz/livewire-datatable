@@ -11,11 +11,13 @@ class DateFilter extends Filter
     use HasConfig,
         IsStringFilter;
 
-    protected string $view = 'livewire-tables::components.tools.filters.date';
+    public $type = 'date';
 
-    protected string $configPath = 'livewire-tables.dateFilter.defaultConfig';
+    protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.date';
 
-    public function validate(string $value): string|bool
+    protected string $configPath = 'thunderbolt-livewire-tables.dateFilter.defaultConfig';
+
+    public function validate(mixed $value): string|bool
     {
         if (DateTime::createFromFormat('Y-m-d', $value) === false) {
             return false;

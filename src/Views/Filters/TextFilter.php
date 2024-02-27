@@ -9,9 +9,11 @@ class TextFilter extends Filter
 {
     use IsStringFilter;
 
-    protected string $view = 'livewire-tables::components.tools.filters.text-field';
+    public $type = 'string';   
+     
+    protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.text-field';
 
-    public function validate(string $value): string|bool
+    public function validate(mixed $value): string|bool
     {
         if ($this->hasConfig('maxlength')) {
             return strlen($value) <= $this->getConfig('maxlength') ? $value : false;

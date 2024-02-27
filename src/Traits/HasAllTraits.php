@@ -5,7 +5,7 @@ namespace Conceptlz\ThunderboltLivewireTables\Traits;
 trait HasAllTraits
 {
     // Note Specific Order Below!
-   /*  use WithTableHooks;
+    use WithTableHooks;
     use WithLoadingPlaceholder;
     use ComponentUtilities,
         WithData,
@@ -26,5 +26,6 @@ trait HasAllTraits
         WithRefresh,
         WithReordering,
         WithSecondaryHeader,
-        WithTableAttributes; */
+        WithFullScreenMode,
+        WithTableAttributes; 
 }

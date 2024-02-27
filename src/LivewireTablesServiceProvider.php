@@ -14,6 +14,9 @@ class LivewireTablesServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
+        include_once(__DIR__.'/helpers.php');
+
+
         AboutCommand::add('Conceptlz Laravel Livewire Tables', fn () => ['Version' => '3.0.0']);
 
         $this->mergeConfigFrom(
@@ -34,9 +37,9 @@ class LivewireTablesServiceProvider extends ServiceProvider
 
         $this->consoleCommands();
 
-      /*   if (config('livewire-tables.inject_core_assets_enabled') || config('livewire-tables.inject_third_party_assets_enabled') || config('livewire-tables.enable_blade_directives')) {
+         if (config('thunderbolt-livewire-tables.inject_core_assets_enabled') || config('thunderbolt-livewire-tables.inject_third_party_assets_enabled') || config('thunderbolt-livewire-tables.enable_blade_directives')) {
             (new ThunderboltFrontendAssets)->boot();
-        } */
+        } 
 
     }
 
@@ -72,9 +75,9 @@ class LivewireTablesServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/thunderbolt-livewire-tables.php', 'thunderbolt-livewire-tables'
         );
-       /*  if (config('livewire-tables.inject_core_assets_enabled') || config('livewire-tables.inject_third_party_assets_enabled') || config('livewire-tables.enable_blade_directives')) {
+        if (config('thunderbolt-livewire-tables.inject_core_assets_enabled') || config('thunderbolt-livewire-tables.inject_third_party_assets_enabled') || config('thunderbolt-livewire-tables.enable_blade_directives')) {
             (new ThunderboltFrontendAssets)->register();
             ComponentHookRegistry::register(AutoInjectThunderboltAssets::class);
-        } */
+        } 
     }
 }

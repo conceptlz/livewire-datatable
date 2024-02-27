@@ -7,11 +7,11 @@ use Conceptlz\ThunderboltLivewireTables\Views\Filter;
 
 class LivewireComponentFilter extends Filter
 {
-    protected string $view = 'livewire-tables::components.tools.filters.livewire-component-filter';
+    protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.livewire-component-filter';
 
     public string $livewireComponent = '';
 
-    public function validate(string $value): string|bool
+    public function validate(mixed $value): string|bool
     {
         return $value;
     }
