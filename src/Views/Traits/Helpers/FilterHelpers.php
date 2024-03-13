@@ -167,4 +167,9 @@ trait FilterHelpers
     {
         return $this->with_operand;
     }
+
+    public function hasFilterRelationKey(): ?string
+    {
+        return $this->relation_key;
+    }
 }

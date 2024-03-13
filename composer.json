@@ -8,7 +8,7 @@
         "tables",
         "laravel"
     ],
-    "homepage": "https://github.com/conceptlz/thunderbolt-livewire-datatable",
+    "homepage": "https://github.com/conceptlz/livewire-datatable",
     "license": "MIT",
     "authors": [
         {

@@ -82,4 +82,10 @@ trait FilterConfiguration
         $this->with_operand = $status;
         return $this;
     }
+
+    public function setFilterRelationKey(string $key_name): self
+    {
+        $this->relation_key = $key_name;
+        return $this;
+    }
 }

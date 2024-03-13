@@ -113,35 +113,38 @@ trait WithFilters
                             }else{
                                 $condition = $this->getFilterCondtionByKey($key);
                                 addApilog('getFilterCondtionByKey',$condition);
-                                $query->where(function ($query) use ($value,$condition,$key,$filter) {
+                                $relation_key = $filter->hasFilterRelationKey();
+                                $query->where(function ($query) use ($value,$condition,$key,$filter,$relation_key) {
+
+                                    $relation_key = ($relation_key != '') ? $relation_key : $key;
                                     if ($condition === 'is empty') {
-                                        $query->whereNull($key);
+                                        $query->whereNull($relation_key);
                                     } elseif ($condition === 'is not empty') {
-                                        $query->whereNotNull($key);
+                                        $query->whereNotNull($relation_key);
                                     }  else {
                                         addApilog('applyFilters-operand-key', $this->getFilterOperandByKey($key));
                                         addApilog('applyFilters-complexValue',$this->complexValue($condition,$value));
                                         if($filter instanceof MultiSelectDropdownFilter || $filter instanceof MultiSelectFilter)
                                         {
                                             $query->WhereIn(
-                                                $key,
+                                                $relation_key,
                                                 $value
                                             );
                                         }else if($filter instanceof DateRangeFilter)
                                         {
                                             $query
-                                            ->whereDate($key, '>=', $value['minDate']) 
-                                            ->whereDate($key, '<=', $value['maxDate']);
+                                            ->whereDate($relation_key, '>=', $value['minDate']) 
+                                            ->whereDate($relation_key, '<=', $value['maxDate']);
                                         }
                                         else if($filter instanceof NumberRangeFilter)
                                         {
                                             $query
-                                            ->where($key, '>=', $value['min']) 
-                                            ->where($key, '<=', $value['max']);
+                                            ->where($relation_key, '>=', $value['min']) 
+                                            ->where($relation_key, '<=', $value['max']);
                                         }
                                         else{
                                             $query->Where(
-                                                $key,
+                                                $relation_key,
                                                 $this->getFilterOperandByKey($key),
                                                 $this->complexValue($condition,$value)
                                             );

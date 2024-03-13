@@ -20,6 +20,8 @@ trait IsFilter
 
     public  $with_operand = true;
     
+    public $relation_key;
+    
     protected string $name;
 
     protected string $key;
