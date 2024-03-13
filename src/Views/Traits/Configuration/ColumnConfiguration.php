@@ -83,4 +83,19 @@ trait ColumnConfiguration
     {
         $this->displayColumnLabel = $status;
     }
+
+    public function exportCallback(callable $callable): Column
+    {
+        $this->exportCallback = $callable;
+
+        return $this;
+    }
+    public function excludeFromExport(): Column
+    {
+        $this->preventExport = true;
+
+        return $this;
+    }
+
+    
 }

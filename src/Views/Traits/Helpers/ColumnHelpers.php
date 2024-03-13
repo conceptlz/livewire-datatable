@@ -205,4 +205,19 @@ trait ColumnHelpers
     {
         return $this->displayColumnLabel ?? true;
     }
+
+    public function hasexportCallback(): bool
+    {
+        return $this->exportCallback !== null;
+    }
+
+    public function getExportCallback(): ?callable
+    {
+        return $this->exportCallback;
+    }
+
+    public function hasexcludeFromExport(): bool
+    {
+        return $this->preventExport;
+    }
 }

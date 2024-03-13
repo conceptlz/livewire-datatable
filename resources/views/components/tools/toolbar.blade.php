@@ -26,7 +26,7 @@
             @if ($component->columnSelectIsEnabled())
                 <x-thunderbolt-livewire-tables::tools.toolbar.items.column-select /> 
             @endif            
-            @if (true)
+            @if ($component->hasExportable())
                 <x-thunderbolt-livewire-tables::tools.toolbar.items.export-button />
             @endif
             @if ($component->searchIsEnabled() && $component->searchVisibilityIsEnabled())

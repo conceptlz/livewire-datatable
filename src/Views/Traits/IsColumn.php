@@ -47,6 +47,10 @@ trait IsColumn
 
     protected mixed $formatCallback = null;
 
+    protected mixed $exportCallback = null;
+
+    protected bool $preventExport = false;
+
     protected bool $html = false;
 
     protected mixed $labelCallback = null;

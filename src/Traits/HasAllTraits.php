@@ -27,5 +27,6 @@ trait HasAllTraits
         WithReordering,
         WithSecondaryHeader,
         WithFullScreenMode,
-        WithTableAttributes; 
+        WithTableAttributes,
+        WithExport; 
 }
