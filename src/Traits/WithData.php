@@ -142,7 +142,7 @@ trait WithData
             switch (true) {
                 case $model instanceof MorphOne:
                 case $model instanceof HasOne:
-                    $table = "{$model->getRelated()->getTable()} AS $tableAlias";
+                    $table = "{$model->getRelated()->getConnection()->getDatabaseName()}.{$model->getRelated()->getTable()} AS $tableAlias";
                     $foreign = "$tableAlias.{$model->getForeignKeyName()}";
                     $other = $i === 0
                         ? $model->getQualifiedParentKeyName()
@@ -151,7 +151,7 @@ trait WithData
                     break;
 
                 case $model instanceof BelongsTo:
-                    $table = "{$model->getRelated()->getTable()} AS $tableAlias";
+                    $table = "{$model->getRelated()->getConnection()->getDatabaseName()}.{$model->getRelated()->getTable()} AS $tableAlias";
                     $foreign = $i === 0
                         ? $model->getQualifiedForeignKeyName()
                         : $lastAlias.'.'.$model->getForeignKeyName();
