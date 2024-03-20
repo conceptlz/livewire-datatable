@@ -50,7 +50,6 @@ trait WithData
 
     protected function baseQuery(): Builder
     {
-        addApilog('baseQuery');
         $this->setBuilder($this->joinRelations());
 
         $this->setBuilder($this->applySearch());
