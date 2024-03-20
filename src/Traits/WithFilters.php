@@ -89,7 +89,6 @@ trait WithFilters
     }
     public function applyFilters(): Builder
     {
-        addApilog('applyFilters');
         $query = $this->getBuilder();
         if ($this->filtersAreEnabled() && $this->hasFilters() && $this->hasAppliedFiltersWithValues()) {
             foreach ($this->getFilters() as $filter) {
@@ -109,7 +108,6 @@ trait WithFilters
                             {
                                 $operand = $this->getFilterOperandByKey($key);
                                 ($filter->getFilterCallback())($this->getBuilder(), $value,$operand);
-                                addApilog('callback');
                             }else{
                                 $condition = $this->getFilterCondtionByKey($key);
                                 addApilog('getFilterCondtionByKey',$condition);

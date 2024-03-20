@@ -66,7 +66,6 @@ trait FilterHelpers
                     //$this->resetFilter($filter);
                     if($filter->getDefaultValue() != '' && $filter->getDefaultValue() != null && empty($filter->getDefaultValue()))
                     {
-                        addApilog('resetFilter');
                         $this->setFilter($filter->getKey(), $filter->getDefaultValue());
                     }
                 }
