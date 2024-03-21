@@ -171,4 +171,11 @@ class DateRangeFilter extends Filter
 
         return '';
     }
+     /**
+     * Gets the Default Value for this Filter via the Component
+     */
+    public function getFilterDefaultValue(): array
+    {
+        return $this->filterDefaultValue ?? [];
+    }
 }
