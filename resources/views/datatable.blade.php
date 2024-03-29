@@ -1,6 +1,9 @@
+@php
+$columnCount = $columns->count() - 1;
+@endphp
 @php($tableName = $this->getTableName())
 <div>
-    <x-thunderbolt-livewire-tables::wrapper :component="$this" :tableName="$tableName">
+    <x-thunderbolt-livewire-tables::wrapper :component="$this" :tableName="$tableName" :columnCount="$columnCount">
         @if ($this->hasConfigurableAreaFor('before-tools'))
             @include($this->getConfigurableAreaFor('before-tools'), $this->getParametersForConfigurableArea('before-tools'))
         @endif
@@ -10,7 +13,7 @@
             <x-thunderbolt-livewire-tables::tools.filter-pills :$filterGenericData/>
         </x-thunderbolt-livewire-tables::tools>
 
-        <x-thunderbolt-livewire-tables::table>
+        <x-thunderbolt-livewire-tables::table >
             <x-slot name="thead">
                 <x-thunderbolt-livewire-tables::table.th.reorder x-cloak x-show="currentlyReorderingStatus" />
                 <x-thunderbolt-livewire-tables::table.th.bulk-actions :displayMinimisedOnReorder="true" />

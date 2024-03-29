@@ -1,8 +1,9 @@
-@aware(['component', 'row', 'rowIndex', 'tableName'])
+@aware(['component', 'row', 'rowIndex', 'tableName','columnCount'])
 @props(['column', 'colIndex'])
 
 @php
-    $customAttributes = $component->getTdAttributes($column, $row, $colIndex, $rowIndex)
+    $customAttributes = $component->getTdAttributes($column, $row, $colIndex, $rowIndex);
+    $td_class = ($columnCount == $colIndex) ? 'whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 flex items-center justify-end space-x-4' : 'whitespace-nowrap min-w-min';
 @endphp
 
 <td wire:key="{{ $tableName . '-table-td-'.$row->{$this->getPrimaryKey()}.'-'.$column->getSlug() }}"
@@ -13,7 +14,7 @@
     @endif
         {{
             $attributes->merge($customAttributes)
-                ->class(['whitespace-nowrap min-w-min' => $component->isTailwind() && ($customAttributes['default'] ?? true)])
+                ->class([$td_class => $component->isTailwind() && ($customAttributes['default'] ?? true)])
                 ->class(['hidden' =>  $component->isTailwind() && $column && $column->shouldCollapseAlways()])
                 ->class(['hidden sm:table-cell' => $component->isTailwind() && $column && $column->shouldCollapseOnMobile()])
                 ->class(['hidden md:table-cell' => $component->isTailwind() && $column && $column->shouldCollapseOnTablet()])

@@ -1,4 +1,4 @@
-@aware(['component', 'tableName'])
+@aware(['component', 'tableName','columnCount'])
 
 @php
     $customAttributes = [
@@ -15,6 +15,7 @@
                 ->except('default') }}
         >
         <div class="inline-block overflow-hidden min-w-full align-middle relative">
+            
             <table
                 wire:key="{{ $tableName }}-table"
                 {{ $attributes->merge($customAttributes['table'])

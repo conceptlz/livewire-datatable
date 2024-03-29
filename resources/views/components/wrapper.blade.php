@@ -1,4 +1,4 @@
-@props(['component', 'tableName'])
+@props(['component', 'tableName','columnCount'])
 
 <div wire:key="{{ $tableName }}-wrapper" x-data="tableWrapper($wire, {{ $component->showBulkActionsDropdownAlpine() }})">
     <div {{ $attributes->merge($this->getComponentWrapperAttributes()) }}
