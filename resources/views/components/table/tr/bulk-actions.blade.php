@@ -11,7 +11,7 @@
     <x-thunderbolt-livewire-tables::table.tr.plain
             x-cloak x-show="selectedItems.length > 0 && !currentlyReorderingStatus"
             wire:key="{{ $tableName }}-bulk-select-message"
-            class="bg-indigo-50 dark:bg-gray-900 dark:text-white"
+            class="bg-indigo-50 "
         >
             <x-thunderbolt-livewire-tables::table.td.plain :colspan="$colspan">
                 <template x-if="selectedItems.length == paginationTotalItemCount">
@@ -26,7 +26,7 @@
                             x-on:click="clearSelected"
                             wire:loading.attr="disabled"
                             type="button"
-                            class="ml-1 text-blue-600 underline text-gray-700 text-sm leading-5 font-medium focus:outline-none focus:text-gray-800 focus:underline transition duration-150 ease-in-out dark:text-white dark:hover:text-gray-400"
+                            class="ml-1 text-blue-600 underline text-gray-700 text-sm leading-5 font-medium focus:outline-none focus:text-gray-800 focus:underline transition duration-150 ease-in-out "
                         >
                             @lang('Deselect All')
                         </button>
@@ -46,7 +46,7 @@
                             x-on:click="selectAllOnPage()"
                             wire:loading.attr="disabled"
                             type="button"
-                            class="ml-1 text-blue-600 underline text-gray-700 text-sm leading-5 font-medium focus:outline-none focus:text-gray-800 focus:underline transition duration-150 ease-in-out dark:text-white dark:hover:text-gray-400"
+                            class="ml-1 text-blue-600 underline text-gray-700 text-sm leading-5 font-medium focus:outline-none focus:text-gray-800 focus:underline transition duration-150 ease-in-out"
                         >
                             @lang('Select All On Page')
                         </button>&nbsp;
@@ -55,7 +55,7 @@
                             x-on:click="setAllSelected"
                             wire:loading.attr="disabled"
                             type="button"
-                            class="ml-1 text-blue-600 underline text-gray-700 text-sm leading-5 font-medium focus:outline-none focus:text-gray-800 focus:underline transition duration-150 ease-in-out dark:text-white dark:hover:text-gray-400"
+                            class="ml-1 text-blue-600 underline text-gray-700 text-sm leading-5 font-medium focus:outline-none focus:text-gray-800 focus:underline transition duration-150 ease-in-out"
                         >
                             @lang('Select All')
                         </button>
@@ -64,7 +64,7 @@
                             x-on:click="clearSelected"
                             wire:loading.attr="disabled"
                             type="button"
-                            class="ml-1 text-blue-600 underline text-gray-700 text-sm leading-5 font-medium focus:outline-none focus:text-gray-800 focus:underline transition duration-150 ease-in-out dark:text-white dark:hover:text-gray-400"
+                            class="ml-1 text-blue-600 underline text-gray-700 text-sm leading-5 font-medium focus:outline-none focus:text-gray-800 focus:underline transition duration-150 ease-in-out"
                         >
                             @lang('Deselect All')
                         </button>
