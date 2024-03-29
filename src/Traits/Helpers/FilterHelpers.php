@@ -59,7 +59,6 @@ trait FilterHelpers
             addApilog('mountFilterHelpers-filter',$filter);
             if (! isset($this->appliedFilters[$filter->getKey()])) {
                 if ($filter->hasFilterDefaultValue()) {
-                    addApilog('mountFilterHelpers-getFilterDefaultValue');
                     $this->setFilter($filter->getKey(), $filter->getFilterDefaultValue());
                 } else {
                     addApilog('mountFilterHelpers-resetFilter',$filter);

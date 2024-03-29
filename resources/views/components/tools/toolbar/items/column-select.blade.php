@@ -15,15 +15,16 @@
             x-transition:leave="transition ease-in duration-75"
             x-transition:leave-start="transform opacity-100 scale-100"
             x-transition:leave-end="transform opacity-0 scale-95"
-            class="absolute top-0 z-50 w-fit mt-12 -translate-x-1/2 left-1/2">
-        <div class="p-1 mt-1 text-sm bg-white border rounded-md shadow-md border-gray-200/70 text-b-black-400">
-                <div wire:key="{{ $tableName }}-columnSelect-selectAll-{{ rand(0,1000) }}">
+            class="absolute right-0 z-50 mt-2 w-full rounded-md divide-y divide-gray-100  origin-top-right md:w-48 focus:outline-none">
+        <div class="text-sm bg-white border rounded-md shadow-md border-gray-200/70 text-b-black-400">
+            <div class="p-2" role="menu" aria-orientation="vertical" aria-labelledby="column-select-menu">
+                <div wire:key="{{ $tableName }}-columnSelect-selectAll-{{ rand(0,1000) }}" class="hover:bg-gray-100 rounded font-medium text-b-black-600">
                     <label
                         wire:loading.attr="disabled"
                         class="inline-flex items-center px-2 py-1 disabled:opacity-50 disabled:cursor-wait"
                     >
                         <input
-                            class="text-b-red-600 transition duration-150 ease-in-out border-gray-300 rounded shadow-sm focus:border-b-red-300 focus:ring focus:ring-b-red-200 focus:ring-opacity-50 dark:bg-gray-900 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600 dark:focus:bg-gray-600 disabled:opacity-50 disabled:cursor-wait"
+                            class="text-b-red-600 transition duration-150 ease-in-out border-gray-300 rounded shadow-sm focus:border-b-red-300 focus:ring focus:ring-b-red-200 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-wait"
                             wire:loading.attr="disabled" 
                             type="checkbox"
                             @checked($component->getSelectableSelectedColumns()->count() == $component->getSelectableColumns()->count())
@@ -35,22 +36,23 @@
                 
                 @foreach ($component->getColumnsForColumnSelect() as $columnSlug => $columnTitle)
                         <div
-                            wire:key="{{ $tableName }}-columnSelect-{{ $loop->index }}"
+                            wire:key="{{ $tableName }}-columnSelect-{{ $loop->index }}" class="hover:bg-gray-100 rounded font-medium text-b-black-600"
                         >
                             <label
                                 wire:loading.attr="disabled"
                                 wire:target="selectedColumns"
-                                class="inline-flex items-center px-2 py-1 disabled:opacity-50 disabled:cursor-wait"
+                                class=" inline-flex items-center px-2 py-1 disabled:opacity-50 disabled:cursor-wait"
                             >
                                 <input
-                                    class="text-b-red-600 rounded border-gray-300 shadow-sm transition duration-150 ease-in-out focus:border-b-red-300 focus:ring focus:ring-b-red-200 focus:ring-opacity-50 dark:bg-gray-900 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600 dark:focus:bg-gray-600 disabled:opacity-50 disabled:cursor-wait"
+                                    class="text-b-red-600 rounded border-gray-300 shadow-sm transition duration-150 ease-in-out focus:border-b-red-300 focus:ring focus:ring-b-red-200 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-wait"
                                     wire:model.live="selectedColumns" wire:target="selectedColumns"
                                     wire:loading.attr="disabled" type="checkbox"
                                     value="{{ $columnSlug }}" />
                                 <span class="ml-2">{{ $columnTitle }}</span>
                             </label>
                         </div>
-                    @endforeach
+                @endforeach
+            </div>
             
         </div>
     </div>
