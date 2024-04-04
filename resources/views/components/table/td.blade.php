@@ -3,7 +3,7 @@
 
 @php
     $customAttributes = $component->getTdAttributes($column, $row, $colIndex, $rowIndex);
-    $td_class = ($columnCount == $colIndex) ? 'whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 flex items-center space-x-4' : 'whitespace-nowrap min-w-min';
+    $td_class = ($columnCount == $colIndex) ? 'whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 flex items-center space-x-4 justify-end' : 'whitespace-nowrap min-w-min';
 @endphp
 
 <td wire:key="{{ $tableName . '-table-td-'.$row->{$this->getPrimaryKey()}.'-'.$column->getSlug() }}"
