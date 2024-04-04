@@ -69,7 +69,7 @@ trait FilterHelpers
                     }
                 }
             } else {
-                addApilog('mountFilterHelpers-setFilter');
+                //addApilog('mountFilterHelpers-setFilter');
                 $this->setFilter($filter->getKey(), $this->appliedFilters[$filter->getKey()]);
             }
         }
