@@ -1,10 +1,14 @@
-<div>
-    <x-thunderbolt-livewire-tables::tools.filter-label :$filter :$filterLayout :$tableName :$isTailwind :$isBootstrap4 :$isBootstrap5 :$isBootstrap />
-    <div @class([
-        "rounded-md shadow-sm" => $isTailwind,
-        "mb-3 mb-md-0 input-group" => $isBootstrap,
-    ])>
-        <input
+@aware(['component', 'tableName'])
+
+<div class="grid gap-4">
+    <div class="space-y-2">
+        <x-thunderbolt-livewire-tables::tools.filter-label :$filter :$filterLayout :$tableName :$isTailwind :$isBootstrap4 :$isBootstrap5 :$isBootstrap />
+    </div>
+    <div class="grid gap-3 text-xs text-b-black-400">
+        <x-thunderbolt-livewire-tables::tools.filter-condition :$filter  />
+        <div class="grid items-center grid-cols-3 gap-4">
+            <label class="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="{{ $tableName }}-filter-{{ $filter->getKey() }}" >@lang('Value')</label>
+            <input
             wire:model.live="filterComponents.{{ $filter->getKey() }}"
             wire:key="{{ $filter->generateWireKey($tableName, 'date') }}"
             id="{{ $tableName }}-filter-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
@@ -13,9 +17,10 @@
             @if($filter->hasConfig('max')) max="{{ $filter->getConfig('max') }}" @endif
             @if($filter->hasConfig('placeholder')) placeholder="{{ $filter->getConfig('placeholder') }}" @endif
             @class([
-                "block w-full border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 " => $isTailwind,
+                "flex w-full h-8 col-span-2 px-3 py-2 text-xs bg-transparent border rounded-md border-input border-gray-300 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" => $isTailwind,
                 "form-control" => $isBootstrap,
             ])
         />
+        </div>
     </div>
 </div>

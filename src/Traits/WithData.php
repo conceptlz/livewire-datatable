@@ -71,6 +71,7 @@ trait WithData
             $this->applySorting();
 
         }
+        $this->callHook('queryRetrieved', [ $this->getBuilder() ]);
 
         if ($this->paginationIsEnabled() && !$export) {
             if ($this->isPaginationMethod('standard')) {
@@ -97,7 +98,6 @@ trait WithData
                 return $this->getBuilder()->cursorPaginate($this->getPerPage() === -1 ? $this->paginationTotalItemCount : $this->getPerPage(), ['*'], $this->getComputedPageName());
             }
         }
-        
         return $this->getBuilder()->get();
     }
 

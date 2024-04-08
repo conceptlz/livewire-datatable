@@ -43,8 +43,7 @@
                                     wire:confirm="{{ $component->getBulkActionConfirmMessage($action) }}"
                         @endif
                         wire:key="{{ $tableName }}-bulk-action-{{ $action }}"
-                        :class="{ 'bg-gray-100 text-gray-900' : selectableItemIsActive(item), '' : !selectableItemIsActive(item) }"
-                        class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 flex items-center space-x-2 ">
+                        class="relative flex items-center h-full py-2 pl-8 text-gray-700 cursor-pointer select-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none hover:bg-gray-100 hover:text-gray-900">
                         
                         <span class="block font-medium truncate">{{ $title }}</span>
                     </li>
