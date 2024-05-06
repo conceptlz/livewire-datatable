@@ -32,6 +32,9 @@
             @if ($component->searchIsEnabled() && $component->searchVisibilityIsEnabled())
                 <x-thunderbolt-livewire-tables::tools.toolbar.items.search-field />
             @endif
+            @if ($component->hasConfigurableAreaFor('toolbar-right-end'))
+                @include($component->getConfigurableAreaFor('toolbar-right-end'), $component->getParametersForConfigurableArea('toolbar-right-end'))
+            @endif
         </div>
     </div>
 </div>

@@ -90,7 +90,7 @@ trait ComponentUtilities
     /**
      * Keep track of any properties on the custom query string key for this specific table
      */
-    public function updated(string $name, string|array $value): void
+    public function updated(string $name, mixed $value): void
     {
         addApiLog('updated',$name);
         if ($name === 'search') {
