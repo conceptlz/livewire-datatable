@@ -62,8 +62,8 @@
                                 @click.away=""
                                 @keydown.escape.window="popoverOpen=false"
                                 :class="{ 'top-0 mt-12' : popoverPosition == 'bottom', 'bottom-0 mb-12' : popoverPosition == 'top' }"
-                                class="absolute w-[300px] max-w-lg -translate-x-1/2 left-1/2 z-[60]" x-cloak>
-                                <div x-ref="popoverInner" x-show="popoverOpen" class="w-full p-4 bg-white border rounded-md shadow-lg border-gray-200/70">
+                                class="absolute w-[300px] max-w-lg  left-0 z-[60]" x-cloak>
+                                <div x-ref="popoverInner" x-show="popoverOpen" class="w-full p-4 bg-white boabsolute w-[300px] max-w-lg  left-0 z-[60]rder rounded-md shadow-lg border-gray-200/70">
                                     <div x-show="popoverArrow && popoverPosition == 'bottom'" class="absolute top-0 inline-block w-5 mt-px overflow-hidden -translate-x-2 -translate-y-2.5 left-1/2"><div class="w-2.5 h-2.5 origin-bottom-left transform rotate-45 bg-white border-t border-l rounded-sm"></div></div>
                                     <div x-show="popoverArrow  && popoverPosition == 'top'" class="absolute bottom-0 inline-block w-5 mb-px overflow-hidden -translate-x-2 translate-y-2.5 left-1/2"><div class="w-2.5 h-2.5 origin-top-left transform -rotate-45 bg-white border-b border-l rounded-sm"></div></div>
                                     {{ $filter->setGenericDisplayData($filterGenericData)->render() }}
