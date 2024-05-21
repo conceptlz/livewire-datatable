@@ -141,4 +141,10 @@ trait PaginationHelpers
     {
         return $this->tableName.'-perPage';
     }
+
+    #[Computed]
+    public function getPerPageFieldAttributes(): array
+    {
+        return $this->perPageFieldAttributes;
+    }
 }

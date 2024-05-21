@@ -10,6 +10,7 @@
         <div class="flex items-center justify-between">
             <div class="w-1/2">
                 <div class="px-2 space-x-4 divide-x divide-gray-300 flex justify-start items-center">
+                    
                     <div>
                         @if ($component->paginationIsEnabled() && $component->isPaginationMethod('standard') && $rows->lastPage() > 1)
                             <p class="paged-pagination-results text-sm text-gray-700 leading-5 ">
@@ -41,6 +42,10 @@
                             </p>
                         @endif
                     </div>
+                    @if ($component->paginationIsEnabled() && $component->perPageVisibilityIsEnabled())
+
+                        <x-thunderbolt-livewire-tables::tools.toolbar.items.pagination-dropdown />
+                    @endif
                 </div>
             </div>
 
