@@ -12,13 +12,15 @@ class Column
     protected bool $displayColumnLabel = true;
 
     protected string $view = '';
-
+    public $column_name ='';
     public function __construct(string $title, ?string $from = null)
     {
         $this->title = trim($title);
 
         if ($from) {
+            
             $this->from = trim($from);
+            $this->column_name = $this->from;
             $this->hash = md5($this->from);
 
             if (Str::contains($this->from, '.')) {
@@ -31,8 +33,13 @@ class Column
             $this->field = Str::snake($title);
             $this->hash = md5($this->field);
         }
+    
     }
-
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+        return $this;
+    }
     /**
      * @return static
      */
