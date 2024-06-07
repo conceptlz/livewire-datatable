@@ -59,15 +59,12 @@ trait FilterHelpers
      */
     public function mountFilterHelpers(): void
     {
-        addApilog('mountFilterHelpers-appliedFilters',$this->appliedFilters);
-        addApilog('mountFilterHelpers-appliedFigetFilterslters',$this->getFilters());
+       
         foreach ($this->getFilters() as $filter) {
-            addApilog('mountFilterHelpers-filter',$filter);
             if (! isset($this->appliedFilters[$filter->getKey()])) {
                 if ($filter->hasFilterDefaultValue()) {
                     $this->setFilter($filter->getKey(), $filter->getFilterDefaultValue());
                 } else {
-                    addApilog('mountFilterHelpers-resetFilter',$filter);
                     //$this->resetFilter($filter);
                     if($filter->getDefaultValue() != '' && $filter->getDefaultValue() != null && empty($filter->getDefaultValue()))
                     {
@@ -79,7 +76,6 @@ trait FilterHelpers
                 $this->setFilter($filter->getKey(), $this->appliedFilters[$filter->getKey()]);
             }
         }
-        addApilog('mountFilterHelpers-appliedFilters-after',$this->appliedFilters);
     }
 
     public function getFiltersStatus(): bool
@@ -207,7 +203,6 @@ trait FilterHelpers
     public function setFilter(string $filterKey, mixed $value): void
     {
         $this->appliedFilters[$filterKey] = $this->filterComponents[$filterKey] = $value;
-        addApilog('setFilter-appliedFilters',$this->appliedFilters);
        /*  addApilog('appliedFilters',$this->appliedFilters);
         addApilog('filterComponents',$this->filterComponents); */
     }
@@ -253,7 +248,6 @@ trait FilterHelpers
         /* return collect($this->filterComponents ?? [])
             ->filter(fn ($value, $key) => in_array($key, $validFilterKeys, true))
             ->toArray(); */
-        addApilog('$this->appliedFilters',$this->appliedFilters);
         return collect($this->appliedFilters ?? [])
             ->filter(fn ($value, $key) => in_array($key, $validFilterKeys, true))
             ->toArray();
@@ -293,7 +287,10 @@ trait FilterHelpers
      */
     public function getAppliedFiltersWithValues(): array
     {
-        addApilog('getAppliedFiltersWithValues',$this->getAppliedFilters());
+        if($this->debugIsEnabled())
+        {
+            addApilog('getAppliedFiltersWithValues',$this->getAppliedFilters());
+        }
         return array_filter($this->getAppliedFilters(), function ($item, $key) {
             /* addApilog('item',$item);
             addApilog('key',$key); */

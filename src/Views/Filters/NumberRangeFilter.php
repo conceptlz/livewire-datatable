@@ -85,7 +85,6 @@ class NumberRangeFilter extends Filter
 
     public function getFilterPillValue($values): ?string
     {
-        addApilog('getFilterPillValue',$values);
         if ($this->validate($values)) {
             return __('Min:').$values['min'].', '.__('Max:').$values['max'];
         }

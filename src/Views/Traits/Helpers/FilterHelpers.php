@@ -175,7 +175,6 @@ trait FilterHelpers
 
     public function isEmptyCondition($filterConditions): bool
     {
-        addApilog('$this->filterConditions[$this->key]',$filterConditions);
         return (isset($filterConditions[$this->key]) && in_array($filterConditions[$this->key],['is empty','is not empty'])) ? true : false;
     }
     public function getFilterCondition($filterConditions)

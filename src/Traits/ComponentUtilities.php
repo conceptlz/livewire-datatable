@@ -57,7 +57,11 @@ trait ComponentUtilities
      * Runs configure() with Lifecycle Hooks on each Lifecycle
      */
     public function bootedComponentUtilities(): void
-    {addApiLog('bootedComponentUtilities','bootedComponentUtilities');
+    {   
+        if($this->debugIsEnabled())
+        {
+            addApiLog('bootedComponentUtilities','bootedComponentUtilities');
+        }
         // Fire Lifecycle Hooks for configuring
         $this->callHook('configuring');
         $this->callTraitHook('configuring');
@@ -92,7 +96,10 @@ trait ComponentUtilities
      */
     public function updated(string $name, mixed $value): void
     {
-        addApiLog('updated',$name);
+        if($this->debugIsEnabled())
+        {
+            addApiLog('updated',$name);
+        }
         if ($name === 'search') {
             $this->resetComputedPage();
 
