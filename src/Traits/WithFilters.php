@@ -120,8 +120,11 @@ trait WithFilters
                                 if(in_array($condition,['is empty','is not empty']))
                                 {
                                     $value = null;
+                                    ($filter->getFilterCallback())($this->getBuilder(), (string)$value,$operand);
+                                }else{
+                                    ($filter->getFilterCallback())($this->getBuilder(),$value,$operand);
                                 }
-                                ($filter->getFilterCallback())($this->getBuilder(), (string)$value,$operand);
+                                
                             }else{
                                 $condition = $this->getFilterCondtionByKey($key);
                                 $relation_key = $filter->hasFilterRelationKey();
