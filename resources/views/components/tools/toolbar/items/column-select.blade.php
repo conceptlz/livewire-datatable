@@ -15,7 +15,7 @@
             x-transition:leave="transition ease-in duration-75"
             x-transition:leave-start="transform opacity-100 scale-100"
             x-transition:leave-end="transform opacity-0 scale-95"
-            class="absolute right-0 z-50 mt-2 w-full rounded-md divide-y divide-gray-100  origin-top-right md:w-48 focus:outline-none">
+            class="absolute right-0 z-50 mt-2 w-full rounded-md divide-y divide-gray-100  origin-top-right md:w-48 focus:outline-none overflow-auto max-h-96">
         <div class="text-sm bg-white border rounded-md shadow-md border-gray-200/70 text-b-black-400">
             <div class="" role="menu" aria-orientation="vertical" aria-labelledby="column-select-menu">
                 <div wire:key="{{ $tableName }}-columnSelect-selectAll-{{ rand(0,1000) }}" class="hover:bg-gray-100 rounded font-medium text-b-black-600
@@ -23,7 +23,7 @@
                     <label
                         wire:loading.attr="disabled"
                         class="
-                        relative flex justify-start items-center w-full select-none group rounded px-2.5 py-2 hover:bg-gray-100 hover:text-b-black-800 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none  font-medium disabled:opacity-50 disabled:cursor-wait"
+                        relative flex justify-start items-center w-full select-none group rounded px-2.5 py-2 hover:bg-gray-100 hover:text-b-black-800 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none  font-medium disabled:opacity-50 disabled:cursor-wait "
                     >
                         <input
                             class="text-b-red-600 transition duration-150 ease-in-out border-gray-300 rounded shadow-sm focus:border-b-red-300 focus:ring focus:ring-b-red-200 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-wait"
