@@ -10,7 +10,7 @@ class SelectFilter extends Filter
     use HasOptions,
         IsStringFilter;
         
-    public $type = 'string';    
+    public $type = 'select';    
     protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.select';
 
     protected string $configPath = 'thunderbolt-livewire-tables.selectFilter.defaultConfig';

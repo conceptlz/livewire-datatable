@@ -30,6 +30,12 @@ trait FilterHelpers
         'is empty' => 'is empty', 
         'is not empty' => 'is not empty'];
 
+    protected $select_operands = [
+            'is' => 'is',
+            'is not' => 'is not', 
+            'is empty' => 'is empty', 
+            'is not empty' => 'is not empty'];
+
     protected $operators = [
         '=' => '=',
         '>' => '>',
@@ -325,6 +331,10 @@ trait FilterHelpers
         }else{
             unset($this->appliedFilters[$filter->getKey()]);
             unset($this->filterComponents[$filter->getKey()]);
+            if(isset($this->filterConditions[$filter->getKey()]))
+            {
+                unset($this->filterConditions[$filter->getKey()]);
+            }
         }
        
     }
@@ -411,6 +421,7 @@ trait FilterHelpers
     public function getOperands($filter)
     {
         $operands = [
+            'select' => $this->select_operands,
             'string' => $this->string_operands,
             'json' => $this->string_operands,
             'editable' => $this->string_operands,

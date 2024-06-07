@@ -7,17 +7,17 @@
     x-transition:leave="transition ease-in duration-75"
     x-transition:leave-start="transform opacity-100 scale-100"
     x-transition:leave-end="transform opacity-0 scale-95"
-    class="origin-top-left absolute left-0 mt-2 w-full md:w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none z-50 max-h-96 overflow-auto "
+    class="origin-top-left absolute left-0 mt-2 w-full md:w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none z-50 "
     role="menu"
     aria-orientation="vertical"
     aria-labelledby="filters-menu"
 >
-    <div class="py-1.5" >
+    <div class="py-1.5 text-sm" >
         @foreach ($component->getVisibleFilters() as $filter)
             <a href="javascript:void(0);" wire:click="setDefaultFilter('{{ $filter->getKey() }}','');"
                     role="menuitem"
                     id="{{ $tableName }}-filter-{{ $filter->getKey() }}-wrapper"
-             class="relative flex justify-start items-center w-full select-none group rounded px-2.5 py-2 hover:bg-gray-100 hover:text-b-black-800 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+             class="relative flex justify-start items-center w-full select-none group rounded px-2.5 py-2 hover:bg-gray-100 hover:text-b-black-800 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none  font-medium">
                     <span class="mr-2 flex h-3.5 w-3.5 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-2 h-2 fill-current"><circle cx="12" cy="12" r="10"></circle></svg></span>
                     <span>{{ $filter->getName() }}</span>
             </a>

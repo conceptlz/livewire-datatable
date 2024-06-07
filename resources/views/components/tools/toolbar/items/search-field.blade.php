@@ -15,8 +15,8 @@
                 {{ 
                     $attributes->merge($component->getSearchFieldAttributes())
                     ->class([
-                        'block w-full border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out sm:text-sm sm:leading-5 rounded-none rounded-l-md focus:ring-0 focus:border-gray-300' => $component->isTailwind() && $component->hasSearch() && $component->getSearchFieldAttributes()['default'] ?? true,
-                        'block w-full border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out sm:text-sm sm:leading-5 rounded-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' => $component->isTailwind() && !$component->hasSearch() && $component->getSearchFieldAttributes()['default'] ?? true,
+                        'block w-full border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out sm:text-sm  rounded-none rounded-l-md focus:ring-0 focus:border-gray-300 px-3.5 py-1.5 2xl:py-2.5' => $component->isTailwind() && $component->hasSearch() && $component->getSearchFieldAttributes()['default'] ?? true,
+                        'block w-full border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out sm:text-sm  rounded-md focus:border-gray-600 focus:border-2 focus:ring-0 px-3.5 py-1.5 2xl:py-2.5 ' => $component->isTailwind() && !$component->hasSearch() && $component->getSearchFieldAttributes()['default'] ?? true,
                     ])
                     ->except('default') 
                 }}

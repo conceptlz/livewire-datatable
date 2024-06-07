@@ -137,11 +137,12 @@ trait ComponentUtilities
             $filterName = Str::after($name, 'filterConditions.');
             $filter = $this->getFilterByKey($filterName);
             $value = $this->filterComponents[$filterName];
-            if ($filter && $filter->isEmpty($value)) {
-                $this->resetFilter($filterName);
-            }else{
-                $this->appliedFilters = $this->filterComponents;
-            }
+            // if ($filter && $filter->isEmpty($value)) {
+            //     $this->resetFilter($filterName);
+            // }else{
+            //     $this->appliedFilters = $this->filterComponents;
+            // }
+            $this->appliedFilters = $this->filterComponents;
         }
 
     }

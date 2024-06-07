@@ -5,7 +5,7 @@ namespace Conceptlz\ThunderboltLivewireTables\Traits;
 use Illuminate\Database\Eloquent\Builder;
 use Conceptlz\ThunderboltLivewireTables\Traits\Configuration\FilterConfiguration;
 use Conceptlz\ThunderboltLivewireTables\Traits\Helpers\FilterHelpers;
-use Conceptlz\ThunderboltLivewireTables\Views\Filters\{SelectFilter,MultiSelectFilter,MultiSelectDropdownFilter,DateRangeFilter};
+use Conceptlz\ThunderboltLivewireTables\Views\Filters\{SelectFilter,MultiSelectFilter,MultiSelectDropdownFilter,DateRangeFilter,TextFilter};
 trait WithFilters
 {
     use FilterConfiguration,
@@ -96,6 +96,8 @@ trait WithFilters
                     if ($filter->getKey() === $key) {
                         addApilog('applyFilters-key',$key);
                         addApilog('applyFilters-filter',$filter);
+                        $condition = $this->getFilterCondtionByKey($key);
+                        addApilog('applyFilters-condition',$condition);
                         if(! $this->getFilterByKey($key)->isEmpty($value) && (is_array($value) ? count($value) : $value !== null))
                         {
                             // Let the filter class validate the value
@@ -107,6 +109,13 @@ trait WithFilters
                             if($filter->hasFilterCallback())
                             {
                                 $operand = $this->getFilterOperandByKey($key);
+                                addApilog('complex-value',$value);
+                                if($filter instanceof TextFilter)
+                                {
+                                    $condition = $this->getFilterCondtionByKey($key);
+                                    $value = $this->complexValue($condition,$value);
+                                    addApilog('complex-value',$value);
+                                }
                                 ($filter->getFilterCallback())($this->getBuilder(), $value,$operand);
                             }else{
                                 $condition = $this->getFilterCondtionByKey($key);
@@ -154,7 +163,18 @@ trait WithFilters
                             
                             //($filter->getFilterCallback())($this->getBuilder(), $value);
                         }
-                        
+                        elseif(in_array($condition,['is empty','is not empty'])){
+                            $relation_key = $filter->hasFilterRelationKey();
+                            $query->where(function ($query) use ($condition,$key,$filter,$relation_key) {
+
+                                $relation_key = ($relation_key != '') ? $relation_key : $key;
+                                if ($condition === 'is empty') {
+                                    $query->whereNull($relation_key);
+                                } elseif ($condition === 'is not empty') {
+                                    $query->whereNotNull($relation_key);
+                                }  
+                            });
+                        }
                     }
                 }
             }

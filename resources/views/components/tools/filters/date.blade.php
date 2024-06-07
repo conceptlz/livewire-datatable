@@ -6,6 +6,8 @@
     </div>
     <div class="grid gap-3 text-xs text-b-black-400">
         <x-thunderbolt-livewire-tables::tools.filter-condition :$filter  />
+        @if(!isset($this->filterConditions[$filter->getKey()]) ||!in_array($this->filterConditions[$filter->getKey()],['is empty','is not empty']))
+
         <div class="grid items-center grid-cols-3 gap-4">
             <label class="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="{{ $tableName }}-filter-{{ $filter->getKey() }}" >@lang('Value')</label>
             <input
@@ -22,5 +24,6 @@
             ])
         />
         </div>
+        @endif
     </div>
 </div>
