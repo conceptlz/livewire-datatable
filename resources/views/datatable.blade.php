@@ -8,9 +8,11 @@ $columnCount = $columns->count() - 1;
             @include($this->getConfigurableAreaFor('before-tools'), $this->getParametersForConfigurableArea('before-tools'))
         @endif
         <x-thunderbolt-livewire-tables::tools>
-            <x-thunderbolt-livewire-tables::tools.toolbar :$filterGenericData />
+            <x-thunderbolt-livewire-tables::tools.toolbar :$filterGenericData :visibleFilters="$visibleFilters"/>
             <x-thunderbolt-livewire-tables::tools.sorting-pills />
-            <x-thunderbolt-livewire-tables::tools.filter-pills :$filterGenericData/>
+            @if ($this->filtersAreEnabled() && $this->filterPillsAreEnabled())
+                @livewire('filter-pills',['filterGenericData' => $filterGenericData,'filters' => $visibleFilters,'tableName' => $tableName,'appliedFilters' => $this->getAppliedFiltersWithValues(),'filterConditions' => $this->filterConditions,'filterComponents' => $this->filterComponents])
+            @endif
         </x-thunderbolt-livewire-tables::tools>
 
         <x-thunderbolt-livewire-tables::table >

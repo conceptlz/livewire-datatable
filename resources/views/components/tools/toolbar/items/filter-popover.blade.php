@@ -1,4 +1,5 @@
 @aware(['component', 'tableName'])
+
 <div
     x-cloak x-show="filterPopoverOpen"
     x-transition:enter="transition ease-out duration-100"
@@ -13,7 +14,7 @@
     aria-labelledby="filters-menu"
 >
     <div class="py-1.5 text-sm" >
-        @foreach ($component->getVisibleFilters() as $filter)
+        @foreach ($this->getVisibleFilters() as $filter)
             <a href="javascript:void(0);" wire:click="setDefaultFilter('{{ $filter->getKey() }}','');"
                     role="menuitem"
                     id="{{ $tableName }}-filter-{{ $filter->getKey() }}-wrapper"
@@ -24,8 +25,7 @@
         @endforeach
     </div>
    
-
-    @if ($component->hasAppliedVisibleFiltersWithValuesThatCanBeCleared())
+    @if ($this->hasAppliedVisibleFiltersWithValuesThatCanBeCleared())
         <div class="block px-4 py-3 text-sm text-gray-700 " role="menuitem">
             <button
                 x-on:click="filterPopoverOpen = false"
@@ -37,4 +37,5 @@
             </button>
         </div>
     @endif
+    
 </div>

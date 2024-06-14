@@ -1,4 +1,4 @@
-@aware(['component', 'tableName'])
+@aware(['component'])
 @php
     $filterKey = $filter->getKey();
 @endphp

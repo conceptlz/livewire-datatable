@@ -16,6 +16,8 @@ abstract class DataTableComponent extends Component
         'clearSorts' => 'clearSortEvent',
         'setFilter' => 'setFilterEvent',
         'clearFilters' => 'clearFilterEvent',
+        'updateFilters' => 'updateFilters',
+        'resetFilter' => 'resetFilter'
     ];
 
     /**

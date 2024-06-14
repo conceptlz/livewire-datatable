@@ -7,7 +7,7 @@ use Conceptlz\ThunderboltLivewireTables\Views\Traits\Core\{HasConfig,HasView};
 use Conceptlz\ThunderboltLivewireTables\Views\Traits\Filters\{HasCustomPosition,HasVisibility};
 use Conceptlz\ThunderboltLivewireTables\Views\Traits\Helpers\FilterHelpers;
 
-trait IsFilter
+trait IsFilter 
 {
     use FilterConfiguration,
         FilterHelpers,
@@ -22,9 +22,9 @@ trait IsFilter
     
     public $relation_key;
     
-    protected string $name;
+    public string $name;
 
-    protected string $key;
+    public string $key;
 
     protected bool $resetByClearButton = true;
 

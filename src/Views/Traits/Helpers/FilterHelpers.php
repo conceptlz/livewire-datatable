@@ -153,14 +153,14 @@ trait FilterHelpers
         return $this->genericDisplayData;
     }
 
-    public function getFilterDisplayData(): array
+    public function getFilterDisplayData($tableName): array
     {
-        return array_merge($this->getGenericDisplayData(), ['filter' => $this]);
+        return array_merge($this->getGenericDisplayData(), ['filter' => $this,'tableName' => $tableName]);
     }
 
-    public function render(): string|\Illuminate\Contracts\Foundation\Application|\Illuminate\View\View|\Illuminate\View\Factory
+    public function render($tableName = 'table'): string|\Illuminate\Contracts\Foundation\Application|\Illuminate\View\View|\Illuminate\View\Factory
     {
-        return view($this->getViewPath(), $this->getFilterDisplayData());
+        return view($this->getViewPath(), $this->getFilterDisplayData($tableName));
     }
 
     public function hasFilterWithOperand(): bool

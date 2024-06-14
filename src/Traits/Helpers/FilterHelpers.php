@@ -287,10 +287,6 @@ trait FilterHelpers
      */
     public function getAppliedFiltersWithValues(): array
     {
-        if($this->debugIsEnabled())
-        {
-            addApilog('getAppliedFiltersWithValues',$this->getAppliedFilters());
-        }
         return array_filter($this->getAppliedFilters(), function ($item, $key) {
             /* addApilog('item',$item);
             addApilog('key',$key); */

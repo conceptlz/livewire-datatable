@@ -1,10 +1,11 @@
 @aware(['component', 'tableName'])
-
-@if ($component->filtersAreEnabled() && $component->filterPillsAreEnabled() && $component->hasAppliedVisibleFiltersForPills())
+@props(['tableName','filterGenericData'])
+<div>
+@if($this->hasAppliedVisibleFiltersForPills())
 <div class="mt-6 pt-4 border-t border-t-gray-200 flex items-start justify-between"  x-cloak x-show="!currentlyReorderingStatus">
     <div class="w-full flex items-center justify-start">
-            @foreach($component->getAppliedFiltersWithValues() as $filterSelectName => $value)
-                @php($filter = $component->getFilterByKey($filterSelectName))
+            @foreach($this->getAppliedFiltersWithValues() as $filterSelectName => $value)
+                @php($filter = $this->getFilterByKey($filterSelectName))
 
                 @continue(is_null($filter))
                 @continue($filter->isHiddenFromPills())
@@ -54,7 +55,7 @@
                         @if($filter->isEmptyCondition($this->filterConditions))
                         <span class="font-semibold">{{ $filter->getFilterCondition($this->filterConditions) }}</span> 
                          @elseif($value != null && !empty($value) && $value != 'null' && $value != '')  <span class="font-semibold">{{ $filter->getFilterPillValue($value) }}</span> @endif </span>
-                            <a href="javascript:void(0);" wire:click="resetFilter('{{ $filter->getKey() }}')" class="pl-2 py-1 pr-1 text-sky-700 hover:text-sky-800">
+                            <a href="javascript:void(0);" @click="$dispatch('resetFilter',{filter : '{{ $filter->getKey() }}'})" class="pl-2 py-1 pr-1 text-sky-700 hover:text-sky-800">
                                 <span class="sr-only">@lang('Remove filter option')</span>
                                 <svg class="h-3 w-3" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
                             </a>
@@ -69,7 +70,7 @@
                                 <div x-ref="popoverInner" x-show="popoverOpen" class="w-full p-4 bg-white boabsolute w-[300px] max-w-lg  left-0 z-[60]rder rounded-md shadow-lg border-gray-200/70">
                                     <div x-show="popoverArrow && popoverPosition == 'bottom'" class="absolute top-0 inline-block w-5 mt-px overflow-hidden -translate-x-2 -translate-y-2.5 left-1/2"><div class="w-2.5 h-2.5 origin-bottom-left transform rotate-45 bg-white border-t border-l rounded-sm"></div></div>
                                     <div x-show="popoverArrow  && popoverPosition == 'top'" class="absolute bottom-0 inline-block w-5 mb-px overflow-hidden -translate-x-2 translate-y-2.5 left-1/2"><div class="w-2.5 h-2.5 origin-top-left transform -rotate-45 bg-white border-b border-l rounded-sm"></div></div>
-                                    {{ $filter->setGenericDisplayData($filterGenericData)->render() }}
+                                    {{ $filter->setGenericDisplayData($filterGenericData)->render($tableName) }}
                                 </div>
                         </div>
                     </div>
@@ -77,9 +78,10 @@
             @endforeach
     </div>
     <div class="w-48 flex justify-end items-center space-x-3">
-            <button wire:click.prevent="setFilterDefaults" type="button" class="rounded-md bg-gray-700 border-1 border-gray-950/70 px-3.5 py-1.5 2xl:py-2.5 text-sm font-semibold text-gray-100 shadow-sm hover:text-gray-300 hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 inline-flex items-center gap-x-1.5 disabled:bg-gray-300 disabled:text-gray-100 disabled:hover:border-gray-300/70">
+            <button @click="$dispatch('clearFilters')" type="button" class="rounded-md bg-gray-700 border-1 border-gray-950/70 px-3.5 py-1.5 2xl:py-2.5 text-sm font-semibold text-gray-100 shadow-sm hover:text-gray-300 hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 inline-flex items-center gap-x-1.5 disabled:bg-gray-300 disabled:text-gray-100 disabled:hover:border-gray-300/70">
                 @lang('Reset')
             </button>
     </div>
 </div>
 @endif
+</div>

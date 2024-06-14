@@ -1,6 +1,9 @@
 @aware(['component', 'tableName'])
-@props(['filterGenericData'])
-
+@props(['filterGenericData','visibleFilters'])
+@php
+    $popover_layout = $component->isFilterLayoutPopover();
+    $slider_down = $component->isFilterLayoutSlideDown();
+@endphp
 @if ($component->hasConfigurableAreaFor('before-toolbar'))
     @include($component->getConfigurableAreaFor('before-toolbar'), $component->getParametersForConfigurableArea('before-toolbar'))
 @endif
@@ -21,7 +24,7 @@
         </div>
         <div class="w-1/2 flex justify-end items-center space-x-3">
             @if ($component->filtersAreEnabled() && $component->filtersVisibilityIsEnabled() && $component->hasVisibleFilters())
-                <x-thunderbolt-livewire-tables::tools.toolbar.items.filter-button :$filterGenericData />
+                @livewire('filter-component',['filters' => $visibleFilters,'appliedFilters' => $component->getAppliedFiltersWithValues(),'filterGenericData' => $filterGenericData,'popover_layout' => $popover_layout,'tableName' => $tableName])
             @endif
             @if ($component->columnSelectIsEnabled())
                 <x-thunderbolt-livewire-tables::tools.toolbar.items.column-select /> 

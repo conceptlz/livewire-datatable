@@ -4,7 +4,7 @@
 
 <tr {{ $attributes }}>
     <td colspan="{{ $component->getColspanCount() }}">
-        <div class="flex justify-center items-center space-x-2 ">
+        <div class="!absolute top-2/4 -translate-y-2/4 -translate-x-2/4 left-2/4">
             <span class="font-medium py-8 text-gray-400 text-lg ">{{ $component->getEmptyMessage() }}</span>
         </div>
     </td>

@@ -24,7 +24,7 @@ trait WithFilters
     public int $filterCount;
 
     protected $filterCollection;
-
+    
     public array $filterComponents = [];
 
     public array $filterConditions = [];

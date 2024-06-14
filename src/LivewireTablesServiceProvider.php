@@ -8,7 +8,8 @@ use Livewire\ComponentHookRegistry;
 use Conceptlz\ThunderboltLivewireTables\Commands\MakeCommand;
 use Conceptlz\ThunderboltLivewireTables\Features\AutoInjectThunderboltAssets;
 use Conceptlz\ThunderboltLivewireTables\Mechanisms\ThunderboltFrontendAssets; 
-
+use Livewire\Livewire;
+use Conceptlz\ThunderboltLivewireTables\{FilterComponent,FilterSynth,FilterPills};
 class LivewireTablesServiceProvider extends ServiceProvider
 {
     public function boot(): void
@@ -16,7 +17,10 @@ class LivewireTablesServiceProvider extends ServiceProvider
 
         include_once(__DIR__.'/helpers.php');
 
+        Livewire::component('filter-component',FilterComponent::class);
+        Livewire::component('filter-pills',FilterPills::class);
 
+        Livewire::propertySynthesizer(FilterSynth::class);
         AboutCommand::add('Conceptlz Laravel Livewire Tables', fn () => ['Version' => '3.0.0']);
 
         $this->mergeConfigFrom(

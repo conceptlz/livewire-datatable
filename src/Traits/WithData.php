@@ -251,7 +251,7 @@ trait WithData
         // If model does not exist
         throw new DataTableConfigurationException('You must either specify a model or implement the builder method.');
     }
-
+    
     /**
      * Add Rows And Generic Data to View
      */
@@ -259,6 +259,7 @@ trait WithData
     {
         $view->with([
             'filterGenericData' => $this->getFilterGenericData(),
+            'visibleFilters' => $this->getVisibleFilters(),
             'rows' => $this->getRows(),
         ]);
     }

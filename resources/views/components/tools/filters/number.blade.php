@@ -1,4 +1,4 @@
-@aware(['component', 'tableName'])
+@aware(['component'])
 <div class="grid gap-4">
     <div class="space-y-2">
         <x-thunderbolt-livewire-tables::tools.filter-label :$filter :$filterLayout :$tableName :$isTailwind :$isBootstrap4 :$isBootstrap5 :$isBootstrap />

@@ -14,7 +14,7 @@
                 ->class(['overflow-x-auto shadow-md ring-1 ring-gray-950 ring-opacity-5 sm:rounded-lg bg-white' => $customAttributes['wrapper']['default'] ?? true])
                 ->except('default') }}
         >
-        <div class="inline-block overflow-hidden min-w-full align-middle relative">
+        <div class="inline-block overflow-hidden min-w-full align-middle ">
             
             <table
                 wire:key="{{ $tableName }}-table"
