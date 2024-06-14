@@ -138,10 +138,23 @@ trait WithFilters
                                     }  else {
                                         if($filter instanceof MultiSelectDropdownFilter || $filter instanceof MultiSelectFilter)
                                         {
-                                            $query->WhereIn(
-                                                $relation_key,
-                                                $value
-                                            );
+                                            if ($condition === 'is empty') {
+                                                $query->whereNull($relation_key);
+                                            } elseif ($condition === 'is not empty') {
+                                                $query->whereNotNull($relation_key);
+                                            }else if($condition === 'is not') {
+                                                $query->WhereNotIn(
+                                                    $relation_key,
+                                                    $value
+                                                );
+                                            }
+                                            else{
+                                                $query->WhereIn(
+                                                    $relation_key,
+                                                    $value
+                                                );
+                                            }
+                                           
                                         }else if($filter instanceof DateRangeFilter)
                                         {
                                             $query

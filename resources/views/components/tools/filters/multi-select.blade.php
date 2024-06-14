@@ -3,7 +3,10 @@
     <div class="space-y-2">
         <x-thunderbolt-livewire-tables::tools.filter-label :$filter :$filterLayout :$tableName :$isTailwind :$isBootstrap4 :$isBootstrap5 :$isBootstrap />
     </div>
-    <div class="rounded-md shadow-sm">
+    <x-thunderbolt-livewire-tables::tools.filter-condition :$filter  />
+    @if(!isset($this->filterConditions[$filter->getKey()]) ||!in_array($this->filterConditions[$filter->getKey()],['is empty','is not empty']))
+
+    <div class="rounded-md max-h-40 overflow-auto text-sm pl-[6px]">
             <div>
                 <input
                     type="checkbox"
@@ -34,4 +37,5 @@
                 </div>
             @endforeach
     </div>
+    @endif
 </div>

@@ -9,7 +9,7 @@ class MultiSelectFilter extends Filter
 {
     use HasOptions,
         IsArrayFilter;
-    public $type = 'string';    
+    public $type = 'select';    
     
     protected string $view = 'thunderbolt-livewire-tables::components.tools.filters.multi-select';
 
