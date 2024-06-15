@@ -12,7 +12,7 @@
             }
         })
     }
-}" x-init="init()" :key="{{ $rowId }}-{{$column}}">
+}" x-init="init()"  wire:key="edit-{{ $rowId }}_{{ $column }}-{{ rand(0,1000) }}">
     <button class="min-h-[28px] w-full text-left hover:bg-red-100 px-2 py-1 -mx-2 -my-1 rounded focus:outline-none" x-bind:class="{ 'text-green-600': edited }" x-show="!edit"
         x-on:click="edit = true; $nextTick(() => { $refs.input.focus() })">{!! htmlspecialchars($value) !!}</button>
        
