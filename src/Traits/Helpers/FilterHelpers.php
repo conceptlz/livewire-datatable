@@ -36,6 +36,11 @@ trait FilterHelpers
             'is empty' => 'is empty', 
             'is not empty' => 'is not empty'];
 
+    protected $boolean_operands = [
+        'is' => 'is',
+        'is not' => 'is not', 
+    ];
+
     protected $operators = [
         '=' => '=',
         '>' => '>',
@@ -415,6 +420,7 @@ trait FilterHelpers
     {
         $operands = [
             'select' => $this->select_operands,
+            'boolean' => $this->boolean_operands,
             'string' => $this->string_operands,
             'json' => $this->string_operands,
             'editable' => $this->string_operands,
