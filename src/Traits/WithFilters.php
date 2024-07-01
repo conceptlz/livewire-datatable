@@ -75,7 +75,7 @@ trait WithFilters
                 return '%' . $value . '%';
             } elseif ($condtion === 'does not contain') {
                 return '%' . $value . '%';
-            } elseif ($condtion === 'begins with') {
+            } elseif ($condtion === 'starts with') {
                 return $value . '%';
             } elseif ($condtion === 'ends with') {
                 return '%' . $value;
