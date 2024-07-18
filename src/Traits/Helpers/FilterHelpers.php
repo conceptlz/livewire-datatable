@@ -64,23 +64,39 @@ trait FilterHelpers
      */
     public function mountFilterHelpers(): void
     {
-       
-        foreach ($this->getFilters() as $filter) {
-            if (! isset($this->appliedFilters[$filter->getKey()])) {
+       // addApilog('mountFilterHelpers-setFilter','mountFilterHelpers');
+      //  addApilog('mountFilterHelpers-appliedFilters',$this->appliedFilters);
+       // addApilog('mountFilterHelpers-filterComponents',$this->filterComponents);
+        foreach ($this->getFilters() as $index => $filter) {
+            if (! isset($this->appliedFilters[$index][$filter->getKey()])) {
                 if ($filter->hasFilterDefaultValue()) {
-                    $this->setFilter($filter->getKey(), $filter->getFilterDefaultValue());
+                    $this->setFilter($filter->getKey(), $filter->getFilterDefaultValue(),$index);
                 } else {
                     //$this->resetFilter($filter);
                     if($filter->getDefaultValue() != '' && $filter->getDefaultValue() != null && empty($filter->getDefaultValue()))
                     {
-                        $this->setFilter($filter->getKey(), $filter->getDefaultValue());
+                        $this->setFilter($filter->getKey(), $filter->getDefaultValue(),$index);
                     }
                 }
             } else {
-                //addApilog('mountFilterHelpers-setFilter');
-                $this->setFilter($filter->getKey(), $this->appliedFilters[$filter->getKey()]);
+               // addApilog('mountFilterHelpers-setFilter',$filter->getKey());
+                $this->setFilter($filter->getKey(), $this->appliedFilters[$index][$filter->getKey()],$index);
             }
         }
+        foreach( $this->appliedFilters as $index => $filter)
+        {
+            if(is_array($filter))
+            {
+                foreach($filter as $key => $value)
+                {
+                    if (! isset($this->filterComponents[$index][$key])) {
+                        $this->filterComponents[$index][$key] = $value;
+                    }
+                }
+            }
+        }
+       // addApilog('mountFilterHelpers-appliedFilters',$this->appliedFilters);
+       // addApilog('mountFilterHelpers-filterComponents',$this->filterComponents);
     }
 
     public function getFiltersStatus(): bool
@@ -205,14 +221,14 @@ trait FilterHelpers
     }
 
     #[On('set-filter')]
-    public function setFilter(string $filterKey, mixed $value): void
+    public function setFilter(string $filterKey, mixed $value,int $index): void
     {
-        $this->appliedFilters[$filterKey] = $this->filterComponents[$filterKey] = $value;
-       /*  addApilog('appliedFilters',$this->appliedFilters);
-        addApilog('filterComponents',$this->filterComponents); */
+        $this->appliedFilters[$index][$filterKey] = $this->filterComponents[$index][$filterKey] = $value;
+        // addApilog('appliedFilters-setFilter',$this->appliedFilters);
+       // addApilog('filterComponents-setFilter',$this->filterComponents); 
     }
 
-    public function selectAllFilterOptions(string $filterKey): void
+    public function selectAllFilterOptions(string $filterKey,$index): void
     {
         $filter = $this->getFilterByKey($filterKey);
 
@@ -220,13 +236,13 @@ trait FilterHelpers
             return;
         }
 
-        if (count($this->getAppliedFilterWithValue($filterKey) ?? []) === count($filter->getOptions())) {
-            $this->resetFilter($filterKey);
+        if (count($this->getAppliedFilterWithValue($filterKey,$index) ?? []) === count($filter->getOptions())) {
+            $this->resetFilter($filterKey,$index);
 
             return;
         }
 
-        $this->setFilter($filterKey, array_keys($filter->getOptions()));
+        $this->setFilter($filterKey, array_keys($filter->getOptions()),$index);
     }
 
     #[On('clear-filters')]
@@ -234,10 +250,10 @@ trait FilterHelpers
     {
         foreach ($this->getFilters() as $filter) {
             if ($filter->isResetByClearButton()) {
-                $this->resetFilter($filter);
+                $this->resetFilter($filter,'');
             }
         }
-        addApilog('setFilterDefaults',$this->appliedFilters);
+       // addApilog('setFilterDefaults',$this->appliedFilters);
     }
 
     /**
@@ -253,37 +269,120 @@ trait FilterHelpers
         /* return collect($this->filterComponents ?? [])
             ->filter(fn ($value, $key) => in_array($key, $validFilterKeys, true))
             ->toArray(); */
-        return collect($this->appliedFilters ?? [])
-            ->filter(fn ($value, $key) => in_array($key, $validFilterKeys, true))
+           // addApilog('$this->appliedFilters',$this->appliedFilters);
+        $data = collect($this->appliedFilters ?? [])
+            ->filter(function ($value, $key) use($validFilterKeys) {
+                if(is_array($value))
+                {
+                    if(!empty($value))
+                    {
+                        $key = array_keys($value)[0];
+                  
+                        return in_array($key, $validFilterKeys, true);
+                    }
+                   
+                }else{
+                   return in_array($key, $validFilterKeys, true);
+                }
+            } )
             ->toArray();
+            //addApilog('data',$data);
+            return $data;
     }
 
     public function hasAppliedFiltersWithValues(): bool
     {
+        //addApilog('count($this->getAppliedFiltersWithValues())',count($this->getAppliedFiltersWithValues()));
         return count($this->getAppliedFiltersWithValues()) > 0;
     }
 
     public function hasAppliedVisibleFiltersWithValuesThatCanBeCleared(): bool
     {
         return collect($this->getAppliedFiltersWithValues())
-            ->map(fn ($_item, $key) => $this->getFilterByKey($key))
-            ->reject(fn (Filter $filter) => $filter->isHiddenFromMenus() && ! $filter->isResetByClearButton())
-            ->count() > 0;
+        ->map(function ($_item, $key) {
+            if(is_array($_item))
+            {   
+                $filters = [];
+                foreach($_item as $key => $value)
+                {
+                    $filters[] =  $this->getFilterByKey($key);
+                }
+                return $filters;
+            }else{
+                return  $this->getFilterByKey($key);
+            }
+        })->reject(function ($filter, $key){
+            if(is_array($filter))
+            {   
+                $filters = [];
+                foreach($filter as $key => $value)
+                {
+                    return $value->isHiddenFromMenus() && ! $value->isResetByClearButton();
+                }
+            }else{
+                return  $filter->isHiddenFromMenus() && ! $filter->isResetByClearButton();
+            }
+        })->count() > 0;
     }
 
     public function getFilterBadgeCount(): int
     {
         return collect($this->getAppliedFiltersWithValues())
-            ->map(fn ($_item, $key) => $this->getFilterByKey($key))
-            ->reject(fn (Filter $filter) => $filter->isHiddenFromFilterCount())
+                ->map(function ($_item, $key) {
+                    if(is_array($_item))
+                    {   
+                        $filters = [];
+                        foreach($_item as $key => $value)
+                        {
+                            $filters[] =  $this->getFilterByKey($key);
+                        }
+                        return $filters;
+                    }else{
+                        return  $this->getFilterByKey($key);
+                    }
+                })
+            ->reject(function ($filter, $key){
+                if(is_array($filter))
+                {   
+                    $filters = [];
+                    foreach($filter as $key => $value)
+                    {
+                        return $value->isHiddenFromFilterCount();
+                    }
+                }else{
+                    return  $filter->isHiddenFromFilterCount();
+                }
+            })
             ->count();
     }
 
     public function hasAppliedVisibleFiltersForPills(): bool
     {
         return collect($this->getAppliedFiltersWithValues())
-            ->map(fn ($_item, $key) => $this->getFilterByKey($key))
-            ->reject(fn (Filter $filter) => $filter->isHiddenFromPills())
+            ->map(function ($_item, $key) {
+                if(is_array($_item))
+                {   
+                    $filters = [];
+                    foreach($_item as $key => $value)
+                    {
+                        $filters[] =  $this->getFilterByKey($key);
+                    }
+                    return $filters;
+                }else{
+                    return  $this->getFilterByKey($key);
+                }
+            })->reject(function ($filter, $key){
+                if(is_array($filter))
+                {   
+                    $filters = [];
+                    foreach($filter as $key => $value)
+                    {
+                        return $value->isHiddenFromPills();
+                    }
+                }else{
+                    return  $filter->isHiddenFromPills();
+                }
+            })
             ->count() > 0;
     }
 
@@ -292,6 +391,7 @@ trait FilterHelpers
      */
     public function getAppliedFiltersWithValues(): array
     {
+       // addApilog('$this->getAppliedFilters()',$this->getAppliedFilters());
         return array_filter($this->getAppliedFilters(), function ($item, $key) {
             /* addApilog('item',$item);
             addApilog('key',$key); */
@@ -303,9 +403,10 @@ trait FilterHelpers
     /**
      * @return mixed
      */
-    public function getAppliedFilterWithValue(string $filterKey)
+    public function getAppliedFilterWithValue(string $filterKey,$index)
     {
-        return $this->getAppliedFiltersWithValues()[$filterKey] ?? null;
+        //addApilog('setall',$this->getAppliedFiltersWithValues());
+        return $this->getAppliedFiltersWithValues()[$index][$filterKey] ?? null;
     }
 
     public function getAppliedFiltersWithValuesCount(): int
@@ -316,24 +417,34 @@ trait FilterHelpers
     /**
      * @param  mixed  $filter
      */
-    public function resetFilter($filter): void
+    public function resetFilter($filter,$index): void
     {
         if (! $filter instanceof Filter) {
             $filter = $this->getFilterByKey($filter);
         }
         
-        
+       // addApilog('reset-filter',$this->appliedFilters);
         if($filter->getDefaultValue() != '' && $filter->getDefaultValue() != null && empty($filter->getDefaultValue()))
         {
-            $this->setFilter($filter->getKey(), $filter->getDefaultValue());
+           // addApilog('reset-filter',$filter->getKey());
+            $this->setFilter($filter->getKey(), $filter->getDefaultValue(),$index);
         }else{
-            unset($this->appliedFilters[$filter->getKey()]);
-            unset($this->filterComponents[$filter->getKey()]);
-            if(isset($this->filterConditions[$filter->getKey()]))
+            if($index == '')
             {
-                unset($this->filterConditions[$filter->getKey()]);
+                $this->appliedFilters = [];
+                $this->filterComponents = [];
+                $this->filterConditions = [];
+            }else{
+                unset($this->appliedFilters[$index][$filter->getKey()]);
+                unset($this->filterComponents[$index][$filter->getKey()]);
+                if(isset($this->filterConditions[$index][$filter->getKey()]))
+                {
+                    unset($this->filterConditions[$index][$filter->getKey()]);
+                }
             }
+            
         }
+       // addApilog('reset-filter',$this->appliedFilters);
        
     }
 

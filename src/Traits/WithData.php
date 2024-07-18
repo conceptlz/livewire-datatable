@@ -75,7 +75,7 @@ trait WithData
 
         if ($this->paginationIsEnabled() && !$export) {
             if ($this->isPaginationMethod('standard')) {
-                $paginatedResults = $this->getBuilder()->paginate($this->getPerPage() === -1 ? $this->getBuilder()->count() : $this->getPerPage(), ['*'], $this->getComputedPageName());
+                $paginatedResults = $this->getBuilder()->paginate($this->getPerPage() === -1 ? $this->getBuilder()->get()->count() : $this->getPerPage(), ['*'], $this->getComputedPageName());
 
                 // Get the total number of items available
                 $this->paginationTotalItemCount = $paginatedResults->total() ?? 0;

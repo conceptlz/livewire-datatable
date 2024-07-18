@@ -5,15 +5,15 @@
         <x-thunderbolt-livewire-tables::tools.filter-label :$filter :$filterLayout :$tableName :$isTailwind :$isBootstrap4 :$isBootstrap5 :$isBootstrap />
     </div>
     <div class="grid gap-3 text-xs text-b-black-400">
-        <x-thunderbolt-livewire-tables::tools.filter-condition :$filter  />
-        @if(!isset($this->filterConditions[$filter->getKey()]) ||!in_array($this->filterConditions[$filter->getKey()],['is empty','is not empty']))
+        <x-thunderbolt-livewire-tables::tools.filter-condition :$filter :$index />
+        @if(!isset($this->filterConditions[$index][$filter->getKey()]) ||!in_array($this->filterConditions[$index][$filter->getKey()],['is empty','is not empty']))
 
         <div class="grid items-center grid-cols-3 gap-4">
-            <label class="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="{{ $tableName }}-filter-{{ $filter->getKey() }}" >@lang('Value')</label>
+            <label class="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="{{ $tableName }}-filter-{{$index}}-{{ $filter->getKey() }}" >@lang('Value')</label>
             <input
-            wire:model.live="filterComponents.{{ $filter->getKey() }}"
-            wire:key="{{ $filter->generateWireKey($tableName, 'date') }}"
-            id="{{ $tableName }}-filter-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
+            wire:model.live="filterComponents.{{$index}}.{{ $filter->getKey() }}"
+            wire:key="{{ $filter->generateWireKey($tableName, 'date',$index) }}"
+            id="{{ $tableName }}-filter-{{$index}}-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
             type="date"
             @if($filter->hasConfig('min')) min="{{ $filter->getConfig('min') }}" @endif
             @if($filter->hasConfig('max')) max="{{ $filter->getConfig('max') }}" @endif

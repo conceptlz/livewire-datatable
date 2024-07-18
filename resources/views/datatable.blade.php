@@ -11,7 +11,7 @@ $columnCount = $columns->count() - 1;
             <x-thunderbolt-livewire-tables::tools.toolbar :$filterGenericData :visibleFilters="$visibleFilters"/>
             <x-thunderbolt-livewire-tables::tools.sorting-pills />
             @if ($this->filtersAreEnabled() && $this->filterPillsAreEnabled())
-                @livewire('filter-pills',['filterGenericData' => $filterGenericData,'filters' => $visibleFilters,'tableName' => $tableName,'appliedFilters' => $this->getAppliedFiltersWithValues(),'filterConditions' => $this->filterConditions,'filterComponents' => $this->filterComponents])
+                @livewire('filter-pills',['filterGenericData' => $filterGenericData,'filters' => $visibleFilters,'tableName' => $tableName,'appliedFilters' => $this->getAppliedFiltersWithValues(),'filterConditions' => $this->filterConditions,'filterComponents' => $this->filterComponents,'queryStringAlias' => $this->getQueryStringAlias(),'queryStringStatus' => $this->queryStringIsEnabled()])
             @endif
         </x-thunderbolt-livewire-tables::tools>
 

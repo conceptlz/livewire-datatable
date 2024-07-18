@@ -153,14 +153,14 @@ trait FilterHelpers
         return $this->genericDisplayData;
     }
 
-    public function getFilterDisplayData($tableName): array
+    public function getFilterDisplayData($index,$tableName): array
     {
-        return array_merge($this->getGenericDisplayData(), ['filter' => $this,'tableName' => $tableName]);
+        return array_merge($this->getGenericDisplayData(), ['filter' => $this,'tableName' => $tableName,'index' => $index]);
     }
 
-    public function render($tableName = 'table'): string|\Illuminate\Contracts\Foundation\Application|\Illuminate\View\View|\Illuminate\View\Factory
+    public function render($index,$tableName = 'table'): string|\Illuminate\Contracts\Foundation\Application|\Illuminate\View\View|\Illuminate\View\Factory
     {
-        return view($this->getViewPath(), $this->getFilterDisplayData($tableName));
+        return view($this->getViewPath(), $this->getFilterDisplayData($index,$tableName));
     }
 
     public function hasFilterWithOperand(): bool
@@ -173,12 +173,12 @@ trait FilterHelpers
         return $this->relation_key;
     }
 
-    public function isEmptyCondition($filterConditions): bool
+    public function isEmptyCondition($filterConditions,$index): bool
     {
-        return (isset($filterConditions[$this->key]) && in_array($filterConditions[$this->key],['is empty','is not empty'])) ? true : false;
+        return (isset($filterConditions[$index][$this->key]) && in_array($filterConditions[$index][$this->key],['is empty','is not empty'])) ? true : false;
     }
-    public function getFilterCondition($filterConditions)
+    public function getFilterCondition($filterConditions,$index)
     {
-        return (isset($filterConditions[$this->key]) ) ? $filterConditions[$this->key] : '';
+        return (isset($filterConditions[$index][$this->key]) ) ? $filterConditions[$index][$this->key] : '';
     }
 }

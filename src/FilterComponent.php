@@ -9,10 +9,12 @@ use Illuminate\Support\Collection;
 use Conceptlz\ThunderboltLivewireTables\Views\Filter;
 use Conceptlz\ThunderboltLivewireTables\Traits\Helpers\FilterHelpers;
 use Illuminate\Support\Str;
+use Conceptlz\ThunderboltLivewireTables\Traits\WithQueryString;
 
 class FilterComponent extends Component
 {
     use FilterHelpers;
+    
     public string $tableName = 'table';
    // public $visibleFilters = [];
     public $slider_down;
@@ -29,12 +31,14 @@ class FilterComponent extends Component
         'clearFilters' => 'clearFilterEvent',
         'resetFilter' => 'resetFilter'
     ];
+   
     public function getFilters(): Collection
     {
         if (! isset($this->filterCollection)) {
             $this->filterCollection = $this->filters;
         }
-
+        //addApilog('$this->appliedFiltersss',$this->appliedFilters);
+        //addApilog('$this->filterComponentsss',$this->filterComponents);
         return $this->filterCollection;
 
     }
@@ -61,7 +65,14 @@ class FilterComponent extends Component
 
         if (Str::contains($name, 'filterComponents')) {
             $filterName = Str::after($name, 'filterComponents.');
-            $this->appliedFilters[$filterName] = $this->filterComponents[$filterName] = $value;
+            $index = 0;
+            if(Str::contains($filterName, '.'))
+            {
+                $index = Str::before($filterName, '.');
+                $filterName = Str::after($filterName, '.');
+            }
+            //addApilog('updateFilters-index',$index);
+            $this->appliedFilters[$index][$filterName] = $this->filterComponents[$index][$filterName] = $value;
             
         }
         

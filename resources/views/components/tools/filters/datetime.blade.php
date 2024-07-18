@@ -6,9 +6,9 @@
         "mb-3 mb-md-0 input-group" => $isBootstrap,
     ])>
         <input
-            wire:model.live="filterComponents.{{ $filter->getKey() }}"
-            wire:key="{{ $filter->generateWireKey($tableName, 'datetime') }}"
-            id="{{ $tableName }}-filter-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
+            wire:model.live="filterComponents.{{$index}}.{{ $filter->getKey() }}"
+            wire:key="{{ $filter->generateWireKey($tableName, 'datetime',$index) }}"
+            id="{{ $tableName }}-filter-{{$index}}-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
             type="datetime-local"
             @if($filter->hasConfig('min')) min="{{ $filter->getConfig('min') }}" @endif
             @if($filter->hasConfig('max')) max="{{ $filter->getConfig('max') }}" @endif

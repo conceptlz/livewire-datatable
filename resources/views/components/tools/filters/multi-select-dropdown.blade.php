@@ -5,9 +5,9 @@
     @if ($isTailwind)
         <div class="rounded-md shadow-sm">
             <select multiple
-                wire:model.live.debounce.250ms="filterComponents.{{ $filter->getKey() }}"
-                wire:key="{{ $filter->generateWireKey($tableName, 'multiselectdropdown') }}"
-                id="{{ $tableName }}-filter-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
+                wire:model.live.debounce.250ms="filterComponents.{{$index}}.{{ $filter->getKey() }}"
+                wire:key="{{ $filter->generateWireKey($tableName, 'multiselectdropdown',$index) }}"
+                id="{{ $tableName }}-filter-{{$index}}-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
                 class="block w-full transition duration-150 ease-in-out px-3 py-2 text-xs bg-transparent border rounded-md border-input border-gray-300 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 "
 
                 flex w-full h-8 col-span-2 
@@ -30,9 +30,9 @@
         </div>
     @elseif ($isBootstrap)
         <select multiple
-            wire:model.live.debounce.250ms="filterComponents.{{ $filter->getKey() }}"
-            wire:key="{{ $filter->generateWireKey($tableName, 'multiselectdropdown') }}"
-            id="{{ $tableName }}-filter-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
+            wire:model.live.debounce.250ms="filterComponents.{{$index}}.{{ $filter->getKey() }}"
+            wire:key="{{ $filter->generateWireKey($tableName, 'multiselectdropdown',$index) }}"
+            id="{{ $tableName }}-filter-{{$index}}-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
             class="{{ $isBootstrap4 ? 'form-control' : 'form-select' }}"
         >
         @if ($filter->getFirstOption() != "")
