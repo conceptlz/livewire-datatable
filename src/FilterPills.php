@@ -58,7 +58,7 @@ class FilterPills extends Component
     {
         $this->filterComponents[][$filterKey] = $value;
         $this->appliedFilters[][$filterKey] = $value;
-
+        $this->filterConditions[][$filterKey] = 'is';
        
     }
     

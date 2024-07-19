@@ -52,10 +52,9 @@
                         wire:key="{{ $tableName }}-filter-pill-{{$index }}-{{ $filter->getKey() }}">
                             <button type="button" x-ref="popoverButton"   class="inline-flex items-center gap-x-1.5 rounded-full bg-white border border-slate-200 px-2.5 py-1.5 mb-3 me-2 text-xs font-normal text-slate-500 shadow-sm shadow-slate-300 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
                                 <span @click="popoverOpen=!popoverOpen" >
-                            {{ $filter->getFilterPillTitle() }}:
-                            @if($filter->isEmptyCondition($this->filterConditions,$index) == true)
+                            {{ $filter->getFilterPillTitle() }}:                    
                             <span class="font-semibold">{{ $filter->getFilterCondition($this->filterConditions,$index) }}</span> 
-                            @elseif($value != null && !empty($value) && $value != 'null' && $value != '')  <span class="font-semibold">{{ $filter->getFilterPillValue($value) }}</span> @endif </span>
+                            @if($value != null && !empty($value) && $value != 'null' && $value != '' && !$filter->isEmptyCondition($this->filterConditions,$index))  <span class="font-semibold">{{ $filter->getFilterPillValue($value) }}</span> @endif </span>
                                 <a href="javascript:void(0);" @click="$dispatch('resetFilter',{filter : '{{ $filter->getKey() }}',index : '{{ $index }}'})" class="pl-2 py-1 pr-1 text-sky-700 hover:text-sky-800">
                                     <span class="sr-only">@lang('Remove filter option')</span>
                                     <svg class="h-3 w-3" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
