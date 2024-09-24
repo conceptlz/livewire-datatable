@@ -12,7 +12,7 @@
     x-on:dragover.prevent.throttle.500ms="currentlyReorderingStatus && dragOverEvent(event)"
     x-on:dragleave.prevent.throttle.500ms="currentlyReorderingStatus && dragLeaveEvent(event)"
     @if($component->hasDisplayLoadingPlaceholder()) 
-    wire:loading.remove
+    wire:loading.class.delay="opacity-50 "
     @else
     wire:loading.class.delay="opacity-50 "
     @endif
