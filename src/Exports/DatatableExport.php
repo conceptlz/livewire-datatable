@@ -10,8 +10,9 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class DatatableExport implements FromCollection, WithHeadings, ShouldAutoSize, WithColumnWidths, WithStyles
+class DatatableExport implements FromCollection, WithHeadings, ShouldAutoSize, WithColumnWidths, WithStyles,WithColumnFormatting
 {
     use Exportable;
 
@@ -19,6 +20,7 @@ class DatatableExport implements FromCollection, WithHeadings, ShouldAutoSize, W
     public $fileName = 'DatatableExport.xlsx';
     public $styles = [];
     public $columnWidths = [];
+    public $columnFormat = [];
 
     public function __construct($collection)
     {
@@ -58,6 +60,17 @@ class DatatableExport implements FromCollection, WithHeadings, ShouldAutoSize, W
     {
         return $this->columnWidths;
     }
+    public function setColumnFormat($columnFormat)
+    {
+        $this->columnFormat = $columnFormat;
+
+        return $this;
+    }
+
+    public function getColumnFormat(): array
+    {
+        return $this->columnFormat;
+    }
 
     public function columnWidths(): array
     {
@@ -78,7 +91,12 @@ class DatatableExport implements FromCollection, WithHeadings, ShouldAutoSize, W
 
     public function styles(Worksheet $sheet)
     {
+       
         return $this->getStyles();
+    }
+    public function columnFormats(): array
+    {
+        return $this->getColumnFormat();
     }
 
     public function download()
