@@ -23,6 +23,9 @@
             @endif
         </div>
         <div class="w-1/2 flex justify-end items-center space-x-3">
+            @if ($component->hasConfigurableAreaFor('toolbar-right-start'))
+                @include($component->getConfigurableAreaFor('toolbar-right-start'), $component->getParametersForConfigurableArea('toolbar-right-start'))
+            @endif
             @if ($component->filtersAreEnabled() && $component->filtersVisibilityIsEnabled() && $component->hasVisibleFilters())
                 @livewire('filter-component',['filters' => $visibleFilters,'appliedFilters' => $component->getAppliedFiltersWithValues(),'filterGenericData' => $filterGenericData,'popover_layout' => $popover_layout,'tableName' => $tableName])
             @endif
