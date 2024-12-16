@@ -19,7 +19,10 @@ abstract class DataTableComponent extends Component
         'updateFilters' => 'updateFilters',
         'resetFilter' => 'resetFilter'
     ];
-
+    public function mount()
+    {
+        $this->getPersistCookieData();
+    }
     /**
      * Runs on every request, immediately after the component is instantiated, but before any other lifecycle methods are called
      */

@@ -29,6 +29,7 @@ trait WithData
      */
     public function getRows($export = false): Collection|CursorPaginator|Paginator|LengthAwarePaginator
     {
+        addApilog('getRow','');
         // Setup the Base Query
         $this->baseQuery();
 
@@ -44,7 +45,7 @@ trait WithData
         // Fire hook for rowsRetrieved
         $this->callHook('rowsRetrieved', [$executedQuery]);
         $this->callTraitHook('rowsRetrieved', [$executedQuery]);
-
+        $this->setPersistCookie();
         return $executedQuery;
     }
 

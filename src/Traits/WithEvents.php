@@ -24,13 +24,20 @@ trait WithEvents
         $this->setFilter($filter, $value);
     }
 
-    public function clearFilterEvent(): void
+    public function clearFilterEvent(string $persistantKey): void
     {
-        $this->setFilterDefaults();
+        if($persistantKey == $this->getPersistSessionKey())
+        {
+            $this->setFilterDefaults();
+        }
     }
 
-    public function updateFilters(string $name, mixed $value)
+    public function updateFilters(string $name, mixed $value,string $persistantKey)
     {
+        if($persistantKey != $this->getPersistSessionKey())
+        {
+            return;
+        }
         if (Str::contains($name, 'filterComponents')) {
             $this->resetComputedPage();
 
@@ -52,7 +59,7 @@ trait WithEvents
             $filter = $this->getFilterByKey($filterName);
 
             if ($filter && $filter->isEmpty($value)) {
-                $this->resetFilter($filterName,$index);
+                $this->resetFilter($filterName,$index,$this->getPersistSessionKey());
             }else{
                 //addApilog('filterName',$filterName);
                 //$this->setFilter($filterName,$value);

@@ -10,10 +10,10 @@ use Conceptlz\ThunderboltLivewireTables\Views\Filter;
 use Conceptlz\ThunderboltLivewireTables\Traits\Helpers\FilterHelpers;
 use Illuminate\Support\Str;
 use Conceptlz\ThunderboltLivewireTables\Traits\WithQueryString;
-
+use Conceptlz\ThunderboltLivewireTables\Traits\WithSavingState;
 class FilterComponent extends Component
 {
-    use FilterHelpers;
+    use FilterHelpers,WithSavingState;
     
     public string $tableName = 'table';
    // public $visibleFilters = [];
@@ -31,6 +31,10 @@ class FilterComponent extends Component
         'clearFilters' => 'clearFilterEvent',
         'resetFilter' => 'resetFilter'
     ];
+    public function getTableName(): string
+    {
+        return $this->tableName;
+    }
    
     public function getFilters(): Collection
     {
@@ -56,30 +60,37 @@ class FilterComponent extends Component
                 $value = $filter->getDefaultValue();
             }
         }
-        $this->dispatch('setFilterPill', filterKey: $filterKey , value: $value);
+        $this->dispatch('setFilterPill', filterKey: $filterKey , value: $value, persistantKey : $this->getPersistSessionKey())->to(FilterPills::class);
        
     }
 
-    public function updateFilters(string $name, mixed $value)
+    public function updateFilters(string $name, mixed $value,string $persistantKey)
     {
 
-        if (Str::contains($name, 'filterComponents')) {
-            $filterName = Str::after($name, 'filterComponents.');
-            $index = 0;
-            if(Str::contains($filterName, '.'))
-            {
-                $index = Str::before($filterName, '.');
-                $filterName = Str::after($filterName, '.');
+        if($persistantKey == $this->getPersistSessionKey())
+        {
+            if (Str::contains($name, 'filterComponents')) {
+                $filterName = Str::after($name, 'filterComponents.');
+                $index = 0;
+                if(Str::contains($filterName, '.'))
+                {
+                    $index = Str::before($filterName, '.');
+                    $filterName = Str::after($filterName, '.');
+                }
+                //addApilog('updateFilters-index',$index);
+                $this->appliedFilters[$index][$filterName] = $this->filterComponents[$index][$filterName] = $value;
+                
             }
-            //addApilog('updateFilters-index',$index);
-            $this->appliedFilters[$index][$filterName] = $this->filterComponents[$index][$filterName] = $value;
-            
         }
         
+        
     }
-    public function clearFilterEvent(): void
+    public function clearFilterEvent(string $persistantKey): void
     {
-        $this->setFilterDefaults();
+        if($persistantKey == $this->getPersistSessionKey())
+        {
+            $this->setFilterDefaults();
+        }
     }
     
     /**

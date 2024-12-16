@@ -237,7 +237,7 @@ trait FilterHelpers
         }
 
         if (count($this->getAppliedFilterWithValue($filterKey,$index) ?? []) === count($filter->getOptions())) {
-            $this->resetFilter($filterKey,$index);
+            $this->resetFilter($filterKey,$index,$this->getPersistSessionKey());
 
             return;
         }
@@ -250,7 +250,7 @@ trait FilterHelpers
     {
         foreach ($this->getFilters() as $filter) {
             if ($filter->isResetByClearButton()) {
-                $this->resetFilter($filter,'');
+                $this->resetFilter($filter,'',$this->getPersistSessionKey());
             }
         }
        // addApilog('setFilterDefaults',$this->appliedFilters);
@@ -417,8 +417,12 @@ trait FilterHelpers
     /**
      * @param  mixed  $filter
      */
-    public function resetFilter($filter,$index): void
+    public function resetFilter($filter,$index,string $persistantKey): void
     {
+        if($persistantKey != $this->getPersistSessionKey())
+        {
+            return;
+        }
         if (! $filter instanceof Filter) {
             $filter = $this->getFilterByKey($filter);
         }

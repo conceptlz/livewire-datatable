@@ -11,9 +11,11 @@ use Illuminate\Support\Str;
 use Conceptlz\ThunderboltLivewireTables\Traits\Helpers\FilterHelpers;
 use Illuminate\Support\Arr;
 use Conceptlz\ThunderboltLivewireTables\Traits\WithQueryString;
+use Conceptlz\ThunderboltLivewireTables\Traits\WithSavingState;
+
 class FilterPills extends Component
 {
-    use FilterHelpers;
+    use FilterHelpers,WithSavingState;
     
     public string $tableName = 'table';
     public $slider_down;
@@ -33,6 +35,10 @@ class FilterPills extends Component
         'clearFilters' => 'clearFilterEvent',
         'resetFilter' => 'resetFilter'
     ];
+    public function getTableName(): string
+    {
+        return $this->tableName;
+    }
     protected function queryString(): array
     {
         if ($this->queryStringStatus) {
@@ -54,11 +60,15 @@ class FilterPills extends Component
 
     }
   
-    public function setFilterPill(string $filterKey, mixed $value)
+    public function setFilterPill(string $filterKey, mixed $value,string $persistantKey)
     {
-        $this->filterComponents[][$filterKey] = $value;
-        $this->appliedFilters[][$filterKey] = $value;
-        $this->filterConditions[][$filterKey] = 'is';
+        if($persistantKey == $this->getPersistSessionKey())
+        {
+            $this->filterComponents[][$filterKey] = $value;
+            $this->appliedFilters[][$filterKey] = $value;
+            $this->filterConditions[][$filterKey] = 'is';
+        }
+        
        
     }
     
@@ -129,7 +139,7 @@ class FilterPills extends Component
         }
         //addApilog('$name',$name);
         //addApilog('$value',$value);
-        $this->dispatch('updateFilters', name: $name , value: $value);
+        $this->dispatch('updateFilters', name: $name , value: $value,persistantKey : $this->getPersistSessionKey());
        // addApilog('$this->filterComponents',$this->filterComponents);
        // addApilog('$this->appliedFilters',$this->appliedFilters);
     }
@@ -139,13 +149,16 @@ class FilterPills extends Component
     {
         foreach ($this->getFilters() as $filter) {
             if ($filter->isResetByClearButton()) {
-                $this->resetFilter($filter,'');
+                $this->resetFilter($filter,'',$this->getPersistSessionKey());
             }
         }
     }
-    public function clearFilterEvent(): void
+    public function clearFilterEvent(string $persistantKey): void
     {
-        $this->setFilterDefaults();
+        if($persistantKey == $this->getPersistSessionKey())
+        {
+            $this->setFilterDefaults();
+        }
     }
     /**
      * Runs on every request, immediately after the component is instantiated, but before any other lifecycle methods are called

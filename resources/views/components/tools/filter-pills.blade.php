@@ -1,5 +1,8 @@
 @aware(['component', 'tableName'])
 @props(['tableName','filterGenericData'])
+@php
+$persisntKey = $this->getPersistSessionKey();
+@endphp
 <div>
 @if($this->hasAppliedVisibleFiltersForPills())
 <div class="mt-6 pt-4 border-t border-t-gray-200 flex items-start justify-between"  x-cloak x-show="!currentlyReorderingStatus">
@@ -55,7 +58,7 @@
                             {{ $filter->getFilterPillTitle() }}:                    
                             <span class="font-semibold">{{ $filter->getFilterCondition($this->filterConditions,$index) }}</span> 
                             @if($value != null && !empty($value) && $value != 'null' && $value != '' && !$filter->isEmptyCondition($this->filterConditions,$index))  <span class="font-semibold">{{ $filter->getFilterPillValue($value) }}</span> @endif </span>
-                                <a href="javascript:void(0);" @click="$dispatch('resetFilter',{filter : '{{ $filter->getKey() }}',index : '{{ $index }}'})" class="pl-2 py-1 pr-1 text-sky-700 hover:text-sky-800">
+                                <a href="javascript:void(0);" @click="$dispatch('resetFilter',{filter : '{{ $filter->getKey() }}',index : '{{ $index }}',persistantKey: '{{$persisntKey}}'})" class="pl-2 py-1 pr-1 text-sky-700 hover:text-sky-800">
                                     <span class="sr-only">@lang('Remove filter option')</span>
                                     <svg class="h-3 w-3" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
                                 </a>
@@ -80,7 +83,7 @@
             @endforeach
     </div>
     <div class="w-48 flex justify-end items-center space-x-3">
-            <button @click="$dispatch('clearFilters')" type="button" class="rounded-md bg-gray-700 border-1 border-gray-950/70 px-3.5 py-1.5 2xl:py-2.5 text-sm font-semibold text-gray-100 shadow-sm hover:text-gray-300 hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 inline-flex items-center gap-x-1.5 disabled:bg-gray-300 disabled:text-gray-100 disabled:hover:border-gray-300/70">
+            <button @click="$dispatch('clearFilters',{persistantKey: '{{$persisntKey}}'})" type="button" class="rounded-md bg-gray-700 border-1 border-gray-950/70 px-3.5 py-1.5 2xl:py-2.5 text-sm font-semibold text-gray-100 shadow-sm hover:text-gray-300 hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 inline-flex items-center gap-x-1.5 disabled:bg-gray-300 disabled:text-gray-100 disabled:hover:border-gray-300/70">
                 @lang('Reset')
             </button>
     </div>
