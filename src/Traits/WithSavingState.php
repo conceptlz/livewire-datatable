@@ -37,7 +37,8 @@ trait WithSavingState
         //     Cookie::forget($this->getPersistSessionKey());
         // }
         //$cookie = cookie($this->getPersistSessionKey(), 'dark_mode', 60, '/', '.yourdomain.com', false, false);
-        Cookie::queue($this->getPersistSessionKey(), json_encode($this->getTablePersistStateToArray()), 60);
+        $expires = time() + 60 * 60 * 24 * 365; // one year
+        Cookie::queue($this->getPersistSessionKey(), json_encode($this->getTablePersistStateToArray()), $expires);
        // addApilog('cookie',request()->cookie());
     }
     private function getPersistCookieData(): void
