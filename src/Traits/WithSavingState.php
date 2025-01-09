@@ -81,6 +81,25 @@ trait WithSavingState
         }
         if(isset($tableState['appliedFilters']))
         {
+            foreach($tableState['appliedFilters'] as $key => $filters)
+            {
+                foreach($filters as $filterKey => $value)
+                {
+                    $filter = $this->getFilterByKey($filterKey);
+                    
+                    if($filter && $filter->type == 'date-range')
+                    {
+                        if ($filter->hasFilterDefaultValue()) {
+                            $tableState['appliedFilters'][$key][$filterKey] = $filter->getFilterDefaultValue();
+                        }
+                        else
+                        {
+                            $tableState['appliedFilters'][$key][$filterKey] = $filter->getDefaultValue();
+                        }
+                    }
+                }
+                
+            }
             $this->appliedFilters = $tableState['appliedFilters'];
         }
         if(isset($tableState['filterConditions']))
